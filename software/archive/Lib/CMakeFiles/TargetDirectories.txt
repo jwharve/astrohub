@@ -1,0 +1,3 @@
+/home/debian/IEEE_2019/software/Lib/CMakeFiles/rebuild_cache.dir
+/home/debian/IEEE_2019/software/Lib/CMakeFiles/edit_cache.dir
+/home/debian/IEEE_2019/software/Lib/CMakeFiles/BBCLib.dir

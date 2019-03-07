@@ -1,0 +1,35 @@
+View the software repo in a browser:
+https://buffet.cs.clemson.edu/vcs/u/jlammon/IEEE_2019/
+Sign in with Clemson credentials
+Email jlammon@g.clemson.edu if you do not have access
+
+Setup software repo on a local machine:
+On the machine where you want the git repo, use the following command:
+	ssh-keygen
+Just press enter for file and password.
+Go to buffet.cs.clemson.edu.
+Go to settings.
+Go to Create Key.
+You have to copy your public SSH key to buffet. To see your public key, type the following command in your home directory:
+	less .ssh/id_rsa.pub
+Copy all of the contents of the file to your clipboard.
+Paste your clipboard into the 'Key' field on buffet.
+Set the 'Name' field to whatever you call the machine you are using.
+You should be all set. Check to see if it worked by following the instructions below.
+
+Edit/upload files in software repo:
+Follow a tutorial on how to use Git on your preferred OS(easiest on Linux/MacOS).
+You can even SSH into a ECE/CPSC lab machine if necessary.
+Navigate to where you want to keep your ASME repository.
+Use the following command to get the ASME repository:
+	git clone buffet@buffet.cs.clemson.edu:jlammon/IEEE_2019/
+You can now navigate to your personal folder:
+	cd /IEEE_2019/individual/<username>
+Create a text file just to prove that your figured it out:
+	touch success.txt
+Add the file to the git repository:
+	git add success.txt
+Share the file with the rest of us:
+	git commit -m "I figured out git"
+	git push
+To check to see if you commit and push worked, look for your file on the buffet website.

@@ -1,0 +1,45 @@
+Jake Ammons
+IEEE 2019
+
+**SSH into BeagleBone**
+1. Copy 'ssh_beaglebone.sh' script from Git repo. I put it in my home directory.
+2. Edit script variables: USER - account on BeagleBone
+						  REPO - path to Git Repo from where this script is
+3. Make script executable by typing 'sudo chmod 700 ssh_beaglebone.sh'
+4. Plug BeagleBone into power.
+5. Wait about a minute for WL LED (beside PWR LED and barrel jack) to stay on.
+6. Run scipt: './ssh_beaglebone.sh'
+7. Enter 'yes' if prompted to connect to new host.
+8. Enter password.
+9. You should now be connected.
+
+***Advanced Spell Casting***
+**Set a shortcut to run the SSH Scipt**
+1. In your home directory, edit your bashrc file: 'vim .bashrc' 
+2. At the bottom of the file, add the line
+	alias beagle='./ssh_beaglebone.sh'
+3. Save and exit.
+4. Update bash: 'source .bashrc'
+5. Test the shortcut: 'beagle'
+
+**Hiding the Script**
+1. I personally hide the script so that I don't see it with ls:
+	'mv ssh_beaglebone.sh .ssh_beaglebone.sh'
+2. Change any aliases create to include the '.' in the name.
+
+**SSH into BeagleBone Without a Password**
+1. If you have not generated an SSH key yet (like for our Git server), do so:
+	ssh-keygen
+	(For all of the questions asked by ssh-keygen, just press enter)
+2. Turn the BeagleBone on and get the IP address from the Git Repo:
+	cd IEEE_2019
+	git pull
+	cat support/ip_address
+2. Now copy your public SSH key to the BeagleBone:
+	ssh-copy-id	debian@10.10.10.10
+	(Debian is the account you want to share the key with)
+	(10.10.10.10 is the BeagleBone IP)
+3. Your public key should now be shared with the BeagleBone.
+
+The result of combining all of these scripts and shortcuts should be the ability
+to plug in the BeagleBone and connect using a single shortcut.
