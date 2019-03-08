@@ -39,20 +39,20 @@ void driveBackward (int steps)
 
 void strafeRight (int steps)
 {
-	digitalWrite(FR_DIR, LOW);
+	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, HIGH);
 	digitalWrite(BR_DIR, LOW);
-	digitalWrite(BL_DIR, HIGH);
+	digitalWrite(BL_DIR, LOW);
 
 	move(steps);
 }
 
 void strafeLeft (int steps)
 {
-	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, HIGH);
-	digitalWrite(BL_DIR, LOW);
+	digitalWrite(BL_DIR, HIGH);
 
 	move(steps);
 }

@@ -10,7 +10,7 @@
 #define BR_STEP 26
 #define BL_STEP 31
 
-#define ELEVATOR_STEPS 	1250
+#define ELEVATOR_STEPS 	1400
 #define DROP_STEPS 	200
 
 void eleSetup();
