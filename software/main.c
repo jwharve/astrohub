@@ -6,9 +6,9 @@ int main (int argc, char * argv[])
 	eleSetup();
 	driveSetup();
 
-	
+	driveForward(5000);
 
-	down();
+//	down();
 return 0;
 	delay(1000);
 	up();
