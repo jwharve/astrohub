@@ -1,8 +1,21 @@
 #include "drive.h"
 
+void driveOn()
+{
+	digitalWrite(ENABLE,LOW);
+}
+
+void driveOff()
+{
+	digitalWrite(ENABLE,HIGH);
+}
+
 void driveSetup()
 {
 	wiringPiSetup();
+
+	driveOff();
+
 	pinMode(STEP, OUTPUT);
 	pinMode(FR_DIR, OUTPUT);
 	pinMode(FL_DIR, OUTPUT);
@@ -14,8 +27,6 @@ void driveSetup()
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, LOW);
-	
-	digitalWrite(ENABLE,OFF);
 }
 
 void driveForward (int steps)
@@ -78,38 +89,39 @@ void turnLeft (int steps)
 	move(steps);
 }
 
-int move(int steps)
+void move(int steps)
 {
 	float del[2*NUM_RAMP];
+	int i,j;
 
 	// Return if number of steps is 0 (should never be less than 0)
-	if (num_steps <= 0)
+	if (steps <= 0)
 	{
-		return 0;
+		return;
 	}
 
 	// CALCULATE SPEEDS
 	del[0] = START_DELAY * 1000;
-	for (i = 1; i < num_steps/2 && i < NUM_RAMP; i++)
+	for (i = 1; i < steps/2 && i < NUM_RAMP; i++)
 	{
 		del[i] = del[i-1]/(float)ACCEL;
 	}
-	for (; i < num_steps && i < NUM_RAMP*2; i++)
+	for (; i < steps && i < NUM_RAMP*2; i++)
 	{
 		del[i] = del[i-1]*ACCEL;
 	}
-	
+
 	// RAMP UP
-	for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
+	for (i = 0; i < steps/2 && i < NUM_RAMP; i++)
 	{
 		digitalWrite(STEP,HIGH);
-		delayMicroseconds(static_cast<int>(del[j]));
+		delayMicroseconds((unsigned int)(del[j]));
 		digitalWrite(STEP,LOW);
-		delayMicroseconds(static_cast<int>(del[j]));
+		delayMicroseconds((unsigned int)(del[j]));
 		j++;
 	}
 	// TOP SPEED
-	for (; i < num_steps - NUM_RAMP; i++)
+	for (; i < steps - NUM_RAMP; i++)
 	{
 		digitalWrite(STEP,HIGH);
 		delay(1);
@@ -117,12 +129,12 @@ int move(int steps)
 		delay(1);
 	}
 	// RAMP DOWN
-	for (; i < num_steps; i++)
+	for (; i < steps; i++)
 	{
 		digitalWrite(STEP,HIGH);
-		delayMicroseconds(static_cast<int>(del[j]));
+		delayMicroseconds((unsigned int)(del[j]));
 		digitalWrite(STEP,LOW);
-		delayMicroseconds(static_cast<int>(del[j]));
+		delayMicroseconds((unsigned int)(del[j]));
 	}
 }
 

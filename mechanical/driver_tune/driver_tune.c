@@ -1,6 +1,6 @@
 #include <wiringPi.h>
 
-#define STEP 23
+#define STEP 8
 
 int main(void)
 {

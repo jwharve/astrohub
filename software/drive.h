@@ -7,9 +7,8 @@
 #define ACCEL 1.005
 #define NUM_RAMP 113 /* number of accelerations need to get to full speed (1) */
 
-#define ON 0
-#define OFF 1
-
+void driveOn();
+void driveOff();
 void driveSetup();
 void driveForward(int);
 void driveBackward(int);
