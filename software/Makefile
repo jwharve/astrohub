@@ -4,7 +4,7 @@ LIBS = -lwiringPi
 
 TARGET = main
 SRCS = elevator.c drive.c
-DEPS = file.h
+DEPS = pins.h
 
 OBJS = $(SRCS:.c=.o)
 HDRS = $(SRCS:.c=.h)

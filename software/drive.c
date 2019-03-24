@@ -1,5 +1,4 @@
 #include "drive.h"
-#include "file.h"
 
 void driveSetup()
 {
@@ -15,6 +14,8 @@ void driveSetup()
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, LOW);
+	
+	digitalWrite(ENABLE,OFF);
 }
 
 void driveForward (int steps)
@@ -77,18 +78,51 @@ void turnLeft (int steps)
 	move(steps);
 }
 
-void move (int steps)
+int move(int steps)
 {
-	int i = 0;
+	float del[2*NUM_RAMP];
 
-	for(i = 0; i < steps; i++)
+	// Return if number of steps is 0 (should never be less than 0)
+	if (num_steps <= 0)
 	{
-		digitalWrite(STEP, HIGH);
+		return 0;
+	}
 
+	// CALCULATE SPEEDS
+	del[0] = START_DELAY * 1000;
+	for (i = 1; i < num_steps/2 && i < NUM_RAMP; i++)
+	{
+		del[i] = del[i-1]/(float)ACCEL;
+	}
+	for (; i < num_steps && i < NUM_RAMP*2; i++)
+	{
+		del[i] = del[i-1]*ACCEL;
+	}
+	
+	// RAMP UP
+	for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
+	{
+		digitalWrite(STEP,HIGH);
+		delayMicroseconds(static_cast<int>(del[j]));
+		digitalWrite(STEP,LOW);
+		delayMicroseconds(static_cast<int>(del[j]));
+		j++;
+	}
+	// TOP SPEED
+	for (; i < num_steps - NUM_RAMP; i++)
+	{
+		digitalWrite(STEP,HIGH);
 		delay(1);
-
-		digitalWrite(STEP, LOW);
-
+		digitalWrite(STEP,LOW);
 		delay(1);
 	}
+	// RAMP DOWN
+	for (; i < num_steps; i++)
+	{
+		digitalWrite(STEP,HIGH);
+		delayMicroseconds(static_cast<int>(del[j]));
+		digitalWrite(STEP,LOW);
+		delayMicroseconds(static_cast<int>(del[j]));
+	}
 }
+

@@ -1,14 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <wiringPi.h>
-#include "file.h"
+#ifndef ELEVATOR_H
+#define ELEVATOR_H
 
-#define DI	6
-#define FR_STEP 11
-#define FL_STEP 10
-#define BR_STEP 26
-#define BL_STEP 31
+#include "pins.h"
 
 #define ELEVATOR_STEPS 	1400
 #define DROP_STEPS 	200
@@ -21,3 +14,5 @@ void dropBack();
 void dropLeft();
 void dropRight();
 void eleMove(int);
+
+#endif

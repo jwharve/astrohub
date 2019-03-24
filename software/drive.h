@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <wiringPi.h>
-#include "file.h"
+#ifndef DRIVE_H
+#define DRIVE_H
 
-#define STEP 13
-#define FR_DIR 30
-#define FL_DIR 14
-#define BR_DIR 21
-#define BL_DIR 22
+#include "pins.h"
+
+#define START_DELAY 1.75 /* cannot be larger than 16 */
+#define ACCEL 1.005
+#define NUM_RAMP 113 /* number of accelerations need to get to full speed (1) */
+
+#define ON 0
+#define OFF 1
 
 void driveSetup();
 void driveForward(int);
@@ -18,3 +18,5 @@ void strafeLeft(int);
 void turnRight(int);
 void turnLeft(int);
 void move(int);
+
+#endif
