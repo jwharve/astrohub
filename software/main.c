@@ -9,7 +9,7 @@ int main (int argc, char * argv[])
 
 	driveOff();
 
-//	driveForward(5000);
+	driveForward(5000);
 
 //	driveOff();
 
