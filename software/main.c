@@ -7,8 +7,8 @@ int main (int argc, char * argv[])
 	eleSetup();
 	driveSetup();
 
-//	driveOn();
-	turnLeft(5000);
+	driveOn();
+	strafeLeft(5000);
 	driveOff();
 	return 0;
 

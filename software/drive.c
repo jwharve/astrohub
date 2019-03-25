@@ -93,7 +93,7 @@ void turnLeft (int steps)
 
 void move(int steps)
 {
-/*
+
 	int i;
 
 	for (i = 0; i < steps; i++)
@@ -104,7 +104,7 @@ void move(int steps)
 		delay(1);
 	}
 	return;
-*/
+/*
 	float del[2*NUM_RAMP];
 	int i,j;
 
@@ -151,5 +151,6 @@ void move(int steps)
 		delayMicroseconds((unsigned int)(del[j]));
 		j++;
 	}
+*/
 }
 
