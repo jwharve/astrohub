@@ -1,6 +1,7 @@
 include <inputs.scad>
 include <calcs.scad>
 
+use <sidewalls.scad>
 
 module base_piece()
 {
@@ -88,19 +89,21 @@ module jigsaw_cuts()
 
 module mount_holes()
 {
-    hull() {
-            translate(v = [mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back, 0])
-                #circle(d = mount_mount_hole_d, center = true);
-            translate(v = [mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back-mount_mount_hole_differential, 0])
+    hull()
+    {
+        translate(v = [mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back, 0])
             #circle(d = mount_mount_hole_d, center = true);
-        }
-        
-        hull() {
-            translate(v = [-mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back, 0])
-                #circle(d = mount_mount_hole_d, center = true);
-            translate(v = [-mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back-mount_mount_hole_differential, 0])
+        translate(v = [mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back-mount_mount_hole_differential, 0])
+        #circle(d = mount_mount_hole_d, center = true);
+    }
+
+    hull()
+    {
+        translate(v = [-mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back, 0])
             #circle(d = mount_mount_hole_d, center = true);
-        }
+        translate(v = [-mount_mount_hole_offset_w, mount_length/2-mount_mount_hole_offset_from_back-mount_mount_hole_differential, 0])
+        #circle(d = mount_mount_hole_d, center = true);
+    }
 }
 
 module base()
@@ -110,11 +113,11 @@ module base()
         base_piece();
         jigsaw_cuts();
         // wire holes
-        translate(v = [-(robot_width - storage_size)/2, 0, 0])
+        translate(v = [-(shaft_width/2 + 3/4*wire_hole), 0, 0])
         {
             circle(d = wire_hole);
         }
-        translate(v = [(robot_width - storage_size)/2, 0, 0])
+        translate(v = [(shaft_width/2 + 3/4*wire_hole), 0, 0])
         {
             circle(d = wire_hole);
         }
@@ -125,23 +128,48 @@ module base()
             square(size = [storage_size/4,storage_size], center = true);
         }
         
+        // 4 MM FUDGE FACTOR
+        
         // mount holes
         for (ii = [-1, 1])
         {
             for (jj = [-1, 1])
             {
-                translate(v = [ii*(robot_width/2-wheel_d/2), jj*(robot_width/2-mount_depth-wheel_w-wheel_out+mount_mount_hole_offset_from_back+mount_mount_hole_differential/2-mount_mount_hole_d), 0])
+                translate(v = [ii*(robot_width/2-wheel_d/2 - 4), jj*(robot_width/2-mount_depth-wheel_w-wheel_out+mount_mount_hole_offset_from_back+mount_mount_hole_differential/2-mount_mount_hole_d ), 0])
                 {
                     mount_holes();
                 }
             }
         }
+        
+        for (ii = [-1, 1])
+        {
+            translate(v = [ii*(robot_width/2-wheel_d/2 - 4), 0, 0])
+            {
+                mount_holes();
+            }
+        }
+        
         translate(v = [0, 1/4*shaft_width, 0])
         {
             circle(d=shaft_width);
         }
+        
+        //backboard_clearance
+        translate(v = [-(shaft_width/2 - 3/2*backboard_clearance), shaft_width/2+thickness, 0])
+            notchIn(storage_size);
     }
-    teeth();
+    //teeth();
+    
+    
+}
+
+module backboard()
+{
+    square(size = [shaft_width, storage_size], center = true);
+    translate(v = [shaft_width/2+thickness/2, -storage_size/2, 0])
+        notchOut(storage_size);
 }
 
 base();
+*backboard();

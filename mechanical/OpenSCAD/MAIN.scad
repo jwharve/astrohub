@@ -6,6 +6,7 @@ use <cuts.scad>
 use <servo.scad>
 use <drive.scad>
 use <wedge.scad>
+use <sidewalls.scad>
 
 union()
 {
@@ -26,7 +27,7 @@ union()
     color( "blue", 1.0 )
     linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
     {
-        botCut();
+        botCutClosed();
     }
 
     color( "yellow", 1.0 )
@@ -57,7 +58,7 @@ union()
         {
             linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
             {
-                topCut();
+                topCutNoHole();
             }
         }
     }
@@ -147,5 +148,26 @@ union()
         rotate(a = -90, v = [1, 0, 0])
         linear_extrude(height = base_thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
         el_platform();
+    }
+    
+    //MAKE WALLS
+    color("gray")
+    {
+        translate(v = [robot_width/2+thickness/2, base_top, 3/2*shaft_width-thickness])
+        rotate(a = 90, v = [0, 1, 0])
+        linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
+            fullCornerWall1();
+    }
+    color("blue")
+    {
+        translate(v = [0, base_top, robot_width-storage_size])
+        linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
+            fullCornerWall2();
+    }
+    color("green")
+    {
+        translate(v = [0, robot_height-sidewall_clearance-thickness, -storage_size-thickness])
+        linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
+            fullSide();
     }
 }

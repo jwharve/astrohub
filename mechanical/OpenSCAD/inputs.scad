@@ -13,7 +13,7 @@ robot_width_in = 9; // overall width of the robot [in]
 
 base_clearance = 2.65; // clearance of the base to ground [in]
 
-storage_width = 2.65; // inside width of storage container [in]
+storage_width = 2.65; // inside depth of storage container [in]
 
 block_width = 5; // width of jigsaw block [mm]
 
@@ -86,7 +86,9 @@ wheel_out = 17; // how far out the shaft the wheel starts [mm]
 
 wedge_tol = 1; // tolerance for edges of wedge [mm]
 
-wedge_angle = 30; // angle of wedge from horizontal [deg]
+wedge_angle = 40; // angle of wedge from horizontal [deg]
+
+wedge_angle2 = 30; // angle of wedge two from horizontal [deg]
 
 wedge_thickness = 5; // thickness of wedge [mm]
 
@@ -107,3 +109,8 @@ el_step_height_in = 2; // height of steppers for elevator [in]
 el_motor_size = 35; // length of elevator stepper motor [mm]
 
 bracket_thickness = 3; // thickness of bracket for elevator stepper [mm]
+
+
+sidewall_clearance = 100; // clearance from top of base to bottom of retaining wall [mm]
+
+backboard_clearance_in = 0.25; // clearance for backboard from inside of shaft wall [in]

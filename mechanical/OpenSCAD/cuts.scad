@@ -1,5 +1,6 @@
 include <inputs.scad>
 include <calcs.scad>
+use <sidewalls.scad>
 
 module piece() // base piece the correct size to cut from
 {
@@ -72,7 +73,7 @@ module bottom_cut()
     }
 }
 
-module jigsaw()
+module jigsaw1()
 {
     for (ii = [-1, 1])
     {
@@ -81,6 +82,20 @@ module jigsaw()
             translate (v = [ii*(robot_width/2-jj*block_width+block_width/2), base_top-base_thickness/2, 0])
             {
                 square(size = [block_width, base_thickness+tol], center = true);
+            }
+        }
+    }
+}
+
+module jigsaw2()
+{
+    for (ii = [-1, 1])
+    {
+        for (jj = [2:2:floor(storage_size/block_width)-1])
+        {
+            translate (v = [ii*(robot_width/2-jj*block_width+block_width/2), base_top-base_thickness/2, 0])
+            {
+                square(size = [block_width+tol, base_thickness+tol], center = true);
             }
         }
     }
@@ -113,7 +128,7 @@ module el_jigsaw()
     {
         translate (v = [(jj*block_width+block_width/2), 0, 0])
         {
-            square(size = [block_width, base_thickness+tol], center = true);
+            square(size = [block_width+tol, base_thickness+tol], center = true);
         }
     }
 }
@@ -132,7 +147,7 @@ module topCut()
         {
             difference()
             {
-                jigsaw();
+                jigsaw2();
                 square(1000);
             }
         }
@@ -144,17 +159,45 @@ module topCut()
         translate(v = [shaft_width/2, robot_height-el_step_height, 0])
             el_jigsaw();
     }
-    jigsaw();
+    jigsaw1();
+}
+
+module topCutNoHole()
+{
+    union()
+    {
+        topCut();
+        // notches for side walls
+        translate(v = [(robot_width/2+thickness/2),base_top+sidewall_clearance,0])
+        notchOut(sidewall_height);
+        translate(v = [-(robot_width/2+thickness/2),base_top,0])
+        difference()
+        {
+            notchOut(robot_height-base_top);
+            square(2*false_bottom_height, center = true);
+        }
+    }
 }
 
 module topCutHole()
 {
     difference()
     {
-        topCut();
-        translate(v = [-(robot_width/2-storage_size/2), base_top+false_bottom_height+storage_size/2, 0])
+        union()
         {
-            square(size = [storage_size, storage_size], center = true);
+            topCut();
+            // notches for side walls
+            translate(v = [(robot_width/2+thickness/2),base_top+sidewall_clearance,0])
+                notchOut(sidewall_height);
+            
+            translate(v = [-(robot_width/2+thickness/2),base_top,0])
+                notchOut(robot_height-base_top);
+            
+        }
+        // the -25 and +50 are used to delete the notches on the side
+        translate(v = [-(robot_width/2-storage_size/2)-25, base_top+false_bottom_height+storage_size/2, 0])
+        {
+            square(size = [storage_size+50, storage_size], center = true);
         }
     }
 }
@@ -174,14 +217,37 @@ module botCut()
         translate(v = [shaft_width/2, robot_height-el_step_height, 0])
             el_jigsaw();
     }
-    jigsaw();
+    jigsaw1();
+    
+}
+
+module botCutClosed()
+{
+    union()
+    {
+        botCut();
+        // notches for side walls
+        translate(v = [(robot_width/2+thickness/2),base_top+sidewall_clearance,0])
+            notchOut(sidewall_height);
+        translate(v = [-(robot_width/2+thickness/2),base_top+sidewall_clearance,0])
+            notchOut(sidewall_height);
+    }
 }
 
 module botCutOpen()
 {
     difference()
     {
-        botCut();
+        union()
+        {
+            botCut();
+            // notches for side walls
+            translate(v = [(robot_width/2+thickness/2),base_top,0])
+                notchOut(robot_height-base_top);
+            
+            translate(v = [-(robot_width/2+thickness/2),base_top+sidewall_clearance,0])
+                notchOut(sidewall_height);
+        }
         translate (v = [0, base_bottom/2, 0])
         {
             square(size = [shaft_width+2*thickness, base_bottom], center = true);
@@ -191,7 +257,7 @@ module botCutOpen()
         translate(v = [shaft_width/2+storage_size/2,false_bottom_height,0])
             difference()
             {
-                jigsaw();
+                jigsaw2();
                 square(1000);
             }
         square(size = [1000, 2*bottom_clearance], center = true);
@@ -212,7 +278,7 @@ module false_bottom_plate()
             {
                 difference()
                 {
-                    jigsaw();
+                    jigsaw1();
                     square(1000);
                 }
             }
@@ -220,7 +286,7 @@ module false_bottom_plate()
             {
                 difference()
                 {
-                    jigsaw();
+                    jigsaw1();
                     square(1000);
                 }
             }
@@ -230,7 +296,7 @@ module false_bottom_plate()
             {
                 difference()
                 {
-                    jigsaw();
+                    jigsaw1();
                     square(1000);
                 }
             }
@@ -258,9 +324,9 @@ module el_platform()
     el_jigsaw();
 }
 
-topCut();
-*topCutHole();
-*botCut();
+*topCutNoHole();
+topCutHole();
+*botCutClosed();
 *botCutOpen();
 *false_bottom_plate();
 *el_platform();

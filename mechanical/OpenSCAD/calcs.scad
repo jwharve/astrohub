@@ -8,6 +8,7 @@ base_bottom = base_clearance*cu; // height of the bottom of the base
 base_top = base_bottom + base_thickness; // height of the top of the base
 
 storage_size = storage_width*cu; // inside depth of storage area
+
 storage_height = robot_height-base_top; // height of storage container
 wire_hole = wire_hole_in*cu; // diameter of hole for wires under storage area
 
@@ -42,6 +43,12 @@ top_cut_height = robot_height - dump_height - cut_height + tol; // height of top
 
 el_step_height = el_step_height_in*cu; // height of steppers for elevator
 
+
+sidewall_height = robot_height-(base_top + sidewall_clearance); // hieght of sidewall
+
+
+backboard_clearance = backboard_clearance_in*cu; // clearance for backboard from inside of shaft wall
+
 // Checking
 if (shaft_width < storage_size)
 {
@@ -68,4 +75,8 @@ else
 
 
 echo(shaft_width/cu);
+echo(storage_size/cu);
+
+
+echo("asdf");
 echo(storage_size/cu);
