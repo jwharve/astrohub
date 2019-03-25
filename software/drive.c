@@ -14,6 +14,8 @@ void driveSetup()
 {
 	wiringPiSetup();
 
+
+	pinMode(ENABLE,OUTPUT);
 	driveOff();
 
 	pinMode(STEP, OUTPUT);
@@ -71,16 +73,6 @@ void strafeLeft (int steps)
 
 void turnRight (int steps)
 {
-	digitalWrite(FR_DIR, HIGH);
-	digitalWrite(FL_DIR, HIGH);
-	digitalWrite(BR_DIR, HIGH);
-	digitalWrite(BL_DIR, HIGH);
-
-	move(steps);
-}
-
-void turnLeft (int steps)
-{
 	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
@@ -89,9 +81,19 @@ void turnLeft (int steps)
 	move(steps);
 }
 
+void turnLeft (int steps)
+{
+	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FL_DIR, HIGH);
+	digitalWrite(BR_DIR, HIGH);
+	digitalWrite(BL_DIR, HIGH);
+
+	move(steps);
+}
+
 void move(int steps)
 {
-
+/*
 	int i;
 
 	for (i = 0; i < steps; i++)
@@ -102,7 +104,7 @@ void move(int steps)
 		delay(1);
 	}
 	return;
-/*
+*/
 	float del[2*NUM_RAMP];
 	int i,j;
 
@@ -149,6 +151,5 @@ void move(int steps)
 		delayMicroseconds((unsigned int)(del[j]));
 		j++;
 	}
-*/
 }
 

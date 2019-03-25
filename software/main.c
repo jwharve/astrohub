@@ -7,11 +7,14 @@ int main (int argc, char * argv[])
 	eleSetup();
 	driveSetup();
 
+//	driveOn();
+	turnLeft(5000);
 	driveOff();
+	return 0;
 
-	driveForward(5000);
+	turnLeft(5000);
 
-//	driveOff();
+	driveOff();
 
 	return 0;
 }
