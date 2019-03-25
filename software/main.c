@@ -8,7 +8,7 @@ int main (int argc, char * argv[])
 	driveSetup();
 
 	driveOn();
-	strafeLeft(5000);
+	strafeRight(1000);
 	driveOff();
 	return 0;
 
