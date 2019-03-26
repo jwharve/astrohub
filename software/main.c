@@ -8,13 +8,13 @@ int main (int argc, char * argv[])
 	driveSetup();
 
 	driveOn();
-	driveForward(500);
-/*	turnRight(500);
+//	driveForward(500);
+//	turnRight(500);
 	delay(500);
 	strafeLeft(750);
 	delay(500);
 	strafeRight(750);
-*/	driveOff();
+	driveOff();
 	return 0;
 
 	turnLeft(5000);
