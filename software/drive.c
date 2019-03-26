@@ -93,7 +93,7 @@ void turnLeft (int steps)
 
 void move(int steps)
 {
-
+/*
 	int i;
 
 	for (i = 0; i < steps; i++)
@@ -104,7 +104,7 @@ void move(int steps)
 		delay(1);
 	}
 	return;
-/*
+*/
 	float del[2*NUM_RAMP];
 	int i,j;
 
@@ -126,6 +126,7 @@ void move(int steps)
 	}
 
 	// RAMP UP
+	j = 0;
 	for (i = 0; i < steps/2 && i < NUM_RAMP; i++)
 	{
 		digitalWrite(STEP,HIGH);
@@ -138,9 +139,9 @@ void move(int steps)
 	for (; i < steps - NUM_RAMP; i++)
 	{
 		digitalWrite(STEP,HIGH);
-		delay(1);
+		delayMicroseconds(1000);
 		digitalWrite(STEP,LOW);
-		delay(1);
+		delayMicroseconds(1000);
 	}
 	// RAMP DOWN
 	for (; i < steps; i++)
@@ -151,6 +152,5 @@ void move(int steps)
 		delayMicroseconds((unsigned int)(del[j]));
 		j++;
 	}
-*/
 }
 
