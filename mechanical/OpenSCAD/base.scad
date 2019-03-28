@@ -156,7 +156,6 @@ module base()
         
         //backboard_clearance
         translate(v = [-(shaft_width/2 - 3/2*backboard_clearance), shaft_width/2+thickness, 0])
-        rotate(a = [0,0,5])
             notchIn(storage_size);
     }
     //teeth();
