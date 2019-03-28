@@ -133,6 +133,12 @@ module el_jigsaw()
     }
 }
 
+module ir()
+{
+    circle(d = 8.1);
+    translate(v = [-10, 0, 0])
+        circle(d = 2.6);
+}
 
 // Pieces
 module topCut()
@@ -158,6 +164,14 @@ module topCut()
         mirror()
         translate(v = [shaft_width/2, robot_height-el_step_height, 0])
             el_jigsaw();
+        // IR SENSOR
+        translate(v = [0.75*cu, 2*cu, 0])
+        {
+            #ir();
+        }
+        /* // test circle for ir
+        translate(v = [0,1.25*cu,0])
+            #circle(d = 2.5*cu); */
     }
     jigsaw1();
 }
@@ -195,11 +209,18 @@ module topCutHole()
             
         }
         // the -25 and +50 are used to delete the notches on the side
-        translate(v = [-(robot_width/2-storage_size/2)-25, base_top+false_bottom_height+storage_size/2, 0])
+        // others are fudges
+        translate(v = [-(robot_width/2-storage_size/2)-25, base_top+false_bottom_height+1.1*storage_size/2 - 37, 0])
         {
-            square(size = [storage_size+50, storage_size], center = true);
+            square(size = [storage_size+50, 1.1*storage_size + 25], center = true);
+        }
+        // notches for false bottom
+        translate(v = [0, 53.5, 0])
+        {
+            jigsaw1();
         }
     }
+    
 }
 
 module botCut()
@@ -254,27 +275,31 @@ module botCutOpen()
         }
         translate(v = [0, 3/4*base_bottom, 0])
         circle(d = shaft_width);
-        translate(v = [shaft_width/2+storage_size/2,false_bottom_height,0])
+        // jigsaw holes for false bottom
+ /*       translate(v = [shaft_width/2+storage_size/2,false_bottom_height,0])
             difference()
             {
                 jigsaw2();
                 square(1000);
-            }
+            }*/
         square(size = [1000, 2*bottom_clearance], center = true);
     }
 }
 
 module false_bottom_plate()
 {
+    scale(v = [1.15, 1, 1])
     intersection()
     {
         union()
         {
+            // base
             translate(v = [0,storage_size/2,0])
             {
                 square(size = [shaft_width,storage_size], center = true);
             }
-            translate(v = [shaft_width/2+storage_size/2,-(base_top)+storage_size+base_thickness,0])
+            // top notches
+            *translate(v = [shaft_width/2+storage_size/2,-(base_top)+storage_size+base_thickness,0])
             {
                 difference()
                 {
@@ -282,7 +307,8 @@ module false_bottom_plate()
                     square(1000);
                 }
             }
-            translate(v = [shaft_width/2, storage_size/2 + thickness, 0]) rotate(90) translate(v = [shaft_width/2+storage_size/2,-(base_top),0])
+            // right notches
+            translate(v = [shaft_width/2-thickness/2, storage_size/2 + thickness, 0]) rotate(90) translate(v = [shaft_width/2+storage_size/2,-(base_top),0])
             {
                 difference()
                 {
@@ -290,20 +316,20 @@ module false_bottom_plate()
                     square(1000);
                 }
             }
-            
+            // left notches
             mirror()
             translate(v = [shaft_width/2, storage_size/2 + thickness, 0]) rotate(90) translate(v = [shaft_width/2+storage_size/2,-(base_top),0])
             {
                 difference()
                 {
-                    jigsaw1();
+                    #jigsaw1();
                     square(1000);
                 }
             }
         }
         
         translate(v = [0, storage_size/2, 0])
-            square(size = [shaft_width+2*thickness, storage_size+2*thickness], center = true);
+            square(size = [shaft_width+2*base_thickness, storage_size+2*thickness], center = true);
     }
     
 }

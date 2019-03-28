@@ -135,9 +135,11 @@ union()
     // MAKE FALSE BOTTOM
     color("gray")
     {
+        translate (v = [0, -23, 0]) // EXTRA
         translate(v = [0,base_bottom+false_bottom_height+base_thickness/2,shaft_width+storage_size+3/2*thickness])
         rotate(a = -90, v = [1, 0, 0])
-        linear_extrude(height = base_thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
+        rotate(a = [0, 30, 0]) // EXTRA
+        linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
         false_bottom_plate();
     }
     

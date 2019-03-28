@@ -35,7 +35,7 @@ false_bottom_height = false_bottom_height_in*cu; // height of false bottom in fr
 false_opening_height = false_opening_height_in*cu; // height of hole for false bottom
 
 
-cut_height = base_bottom + false_opening_height - base_thickness; // height at which cuts will meet
+cut_height = base_bottom + 0.75*false_opening_height - base_thickness; // height at which cuts will meet
 
 bottom_cut_height = cut_height - base_top + tol; // height of bottom cut
 

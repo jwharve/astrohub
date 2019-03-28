@@ -106,8 +106,11 @@ module fullCornerWall2()
             notchIn(robot_height-base_top);
     }
     
-    translate(v = [shaft_width/2,false_bottom_height+storage_size/2,0])
-        square(size = [storage_size,storage_size], center = true);
+    translate(v = [shaft_width/2,false_bottom_height+storage_size/2.7-1,0])
+        square(size = [storage_size/2,storage_size/1.4], center = true);
+    
+    // triangle to cover false_bottom
+    polygon([[-shaft_width/2-thickness,102],[shaft_width/2+thickness,104],[shaft_width/2+thickness,54]]);
 }
 
 

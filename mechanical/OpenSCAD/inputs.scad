@@ -6,7 +6,7 @@ thickness = 2; // thickness of the acrylic [mm]
 base_thickness = 5; // thickness of the base acrylic [mm]
 
 side_edge = 0.25; // clearance for each side of the robot [in]
-height_edge = 0.1; // clearance for top and bottom of the robot [in]
+height_edge = 0; // clearance for top and bottom of the robot [in]
 
 robot_height_in = 11; // overall height of the robot [in]
 robot_width_in = 9; // overall width of the robot [in]
@@ -97,9 +97,9 @@ wire_hole_in = 0.5; // size of hole for wires to motors
 
 wire_tri_edge = 5; // thickness of edge on wiring triangle [mm]
 
-false_bottom_height_in = 3; // height of false bottom in front [in]
+false_bottom_height_in = 4; // height of false bottom in front [in]
 
-bottom_clearance = 3; // clearance for walls on bottom of robot [mm]
+bottom_clearance = 7; // clearance for walls on bottom of robot [mm]
 
 false_opening_height_in = 3; // height of hole for false bottom [in]
 
