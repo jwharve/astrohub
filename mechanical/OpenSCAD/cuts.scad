@@ -351,8 +351,8 @@ module el_platform()
 }
 
 *topCutNoHole();
-topCutHole();
+*topCutHole();
 *botCutClosed();
 *botCutOpen();
 *false_bottom_plate();
-*el_platform();
+el_platform();

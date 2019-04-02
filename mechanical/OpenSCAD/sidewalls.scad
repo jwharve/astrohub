@@ -114,6 +114,6 @@ module fullCornerWall2()
 }
 
 
-*fullSide();
+fullSide();
 *fullCornerWall1();
-fullCornerWall2();
+*fullCornerWall2();

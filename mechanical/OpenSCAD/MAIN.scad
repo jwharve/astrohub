@@ -160,7 +160,7 @@ union()
         linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)
             fullCornerWall1();
     }
-    color("blue")
+    *color("blue")
     {
         translate(v = [0, base_top, robot_width-storage_size])
         linear_extrude(height = thickness, center = true, convexity = 0, twist = 0, slices = 20, scale = 1.0, $fn = 16)

@@ -9,6 +9,22 @@ module base_piece()
     {
         square(size = [robot_width, robot_width], center = true);
         square(size = [robot_width - 2*storage_size, robot_width - 2*storage_size], center = true);
+        
+        
+        translate(v = [-robot_width/2+thickness/2, -robot_width/2, 0])
+            notchIn(robot_width);
+        
+        rotate([0, 0, 90])
+        translate(v = [-robot_width/2+thickness/2, -robot_width/2, 0])
+            notchIn(robot_width);
+        
+        rotate([0, 0, 180])
+        translate(v = [-robot_width/2+thickness/2, -robot_width/2, 0])
+            notchIn(robot_width);
+        
+        rotate([0, 0, 270])
+        translate(v = [-robot_width/2+thickness/2, -robot_width/2, 0])
+            notchIn(robot_width);
     }
 }
 
@@ -168,7 +184,9 @@ module backboard()
     square(size = [shaft_width, storage_size], center = true);
     translate(v = [shaft_width/2+thickness/2, -storage_size/2, 0])
         notchOut(storage_size);
+    translate(v = [shaft_width/2+thickness, -storage_size/2, 0])
+        notchOut(storage_size);
 }
 
-base();
-*backboard();
+*base();
+backboard();
