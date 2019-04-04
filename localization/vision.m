@@ -4,7 +4,7 @@ degH = 60;
 degV = 40;
 
 degH0 = -degH/2;
-degV0 = 30-degV/2;
+degV0 = 50-degV/2;
 
 pixH = 1296;
 pixV = 967;
@@ -25,16 +25,15 @@ numRows = 207;
 height = 10.75*2.54;
 
 
-R = 79;
-% R = 0;
-C = 50;
+R = 0;
+C = 158;
 
 
 pH = (C-numCols/2)/numCols;
-pV = (r-numRows/2)/numRows;
+pV = (R-numRows/2)/numRows;
 
-hDeg = atand(pH*h/d);
-vDeg = atand(pV*v/d);
+hDeg = degH0 + atand(pH*h/d);
+vDeg = degV0 + atand(pV*v/d);
 
 y = height*tand(vDeg)
 x = d*tand(hDeg)/2.54
