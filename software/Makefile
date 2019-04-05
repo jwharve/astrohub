@@ -3,7 +3,7 @@ CFLAGS = -Wall -g
 LIBS = -lwiringPi
 
 TARGET = main
-SRCS = elevator.cpp drive.cpp Sensor.cpp
+SRCS = elevator.cpp drive.cpp Sensor.cpp pi2Arduino.cpp vision.cpp
 DEPS = pins.h
 
 OBJS = $(SRCS:.cpp=.o)
