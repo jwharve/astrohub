@@ -19,4 +19,4 @@ $(TARGET): $(TARGET).cpp $(OBJS) $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 clean:
-	rm $(OBJS) main $()
+	rm $(OBJS) main

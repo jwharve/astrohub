@@ -15,17 +15,12 @@ void dump3(int fd)
 	arduinoWriteChar(fd,'c');
 }
 
-float distance1(int fd)
+void collect(int fd)
 {
-	static char *message;
-
 	arduinoWriteChar(fd, 'd');
-	message = arduinoReadString(fd);
-
-	return atof(message);
 }
 
-float distance2(int fd)
+float distance1(int fd)
 {
 	static char *message;
 
@@ -35,11 +30,21 @@ float distance2(int fd)
 	return atof(message);
 }
 
-float distance3(int fd)
+float distance2(int fd)
 {
 	static char *message;
 
 	arduinoWriteChar(fd, 'f');
+	message = arduinoReadString(fd);
+
+	return atof(message);
+}
+
+float distance3(int fd)
+{
+	static char *message;
+
+	arduinoWriteChar(fd, 'g');
 	message = arduinoReadString(fd);
 
 	return atof(message);

@@ -12,6 +12,7 @@
 void dump1(int);
 void dump2(int);
 void dump3(int);
+void collection(int);
 float distance1(int);
 float distance2(int);
 float distance3(int);
