@@ -1,9 +1,9 @@
 CC = g++
 CFLAGS = -Wall -g
-LIBS = -lwiringPi
+LIBS = -lwiringPi -lm
 
 TARGET = main
-SRCS = elevator.cpp drive.cpp Sensor.cpp
+SRCS = elevator.cpp drive.cpp colorSensor.cpp pi2Arduino.cpp vision.cpp
 DEPS = pins.h
 
 OBJS = $(SRCS:.cpp=.o)
@@ -19,4 +19,4 @@ $(TARGET): $(TARGET).cpp $(OBJS) $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 clean:
-	rm $(OBJS) main $()
+	rm $(OBJS) main
