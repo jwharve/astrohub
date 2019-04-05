@@ -5,13 +5,17 @@
 #define OPEN 0
 #define CLOSE 180
 
+#define COLLECT 0
+#define NOT_COLLECT 180
+
 // servo pins
 #define SERVO_1 9
 #define SERVO_2 10
 #define SERVO_3 11
+#define COLLECTION 3
 
 // distance sensor pins
-#define TRIG_1 3
+#define TRIG_1 2
 #define TRIG_2 5
 #define TRIG_3 7
 
@@ -26,6 +30,7 @@ double distance = 0;
 Servo Servo1;
 Servo Servo2;
 Servo Servo3;
+Servo Collection;
 
 // declare sensors
 UltraSonicDistanceSensor Sensor1(TRIG_1,ECHO_1);
@@ -41,6 +46,7 @@ void setup()
   Servo1.attach(SERVO_1);
   Servo2.attach(SERVO_2);
   Servo3.attach(SERVO_3);
+  Collection.attach(COLLECTION);
 }
 
 void loop()
@@ -72,16 +78,21 @@ void loop()
           Servo3.write(CLOSE);
           break;
         case 'd':
+          Collection.write(COLLECT);
+          delay(1000);
+          Collection.write(NOT_COLLECT);
+          break;
+        case 'e':
           // read distance sensor 1
           distance = Sensor1.measureDistanceCm();
           Serial.println(distance);
           break;
-        case 'e':
+        case 'f':
           // read distance sensor 2
           distance = Sensor2.measureDistanceCm();
           Serial.println(distance);
           break;
-        case 'f':
+        case 'g':
           // read distance sensor 3
           distance = Sensor3.measureDistanceCm();
           Serial.println(distance);
