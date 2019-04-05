@@ -9,6 +9,9 @@ int main (int argc, char * argv[])
 	eleSetup();
 	driveSetup();
 
+	driveOff();
+	return;
+
 	driveOn();
 //	driveForward(500);
 //	turnRight(500);
