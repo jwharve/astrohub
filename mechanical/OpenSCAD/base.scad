@@ -188,5 +188,76 @@ module backboard()
         notchOut(storage_size);
 }
 
+module bumper()
+{
+    h = 2*cu;
+    difference()
+    {
+        union()
+        {
+            square(size = [h,robot_width], center = true);
+            translate(v = [h/2+base_thickness/2,-robot_width/2])
+                scale(v = [base_thickness/thickness, 1])
+                    notchOut(robot_width);
+            
+            translate(v = [-h/2, robot_width/2+thickness/2])
+                rotate([0, 0, -90])
+                    notchOut(h);
+            
+            translate(v = [-h/2, -robot_width/2-thickness/2])
+                square(size = [h, thickness]);
+        }
+        translate(v = [-h/2, -robot_width/2-thickness/2])
+                rotate([0, 0, -90])
+                    notchIn(h);
+    }
+}
+
+module frontBumper()
+{
+    difference()
+    {
+        bumper();
+        square(size = [1000,robot_width-2*wheel_d], center = true);
+    }
+}
+
+// 16 mm circles, 42 mm apart
+module dist()
+{
+    translate(v = [0, -(42-16)/2])
+        circle(d = 17);
+    translate(v = [0, (42-16)/2])
+        circle(d = 17);
+}
+
+//46 mm wide
+
+module distx2Bumper()
+{
+    difference()
+    {
+        bumper();
+        translate(v = [-0.5*cu, (4.25*cu-46)/2])
+            dist();
+        translate(v = [-0.5*cu, -(4.25*cu-46)/2])
+            dist();
+    }
+}
+
+module distx1Bumper()
+{
+    difference()
+    {
+        bumper();
+        translate(v = [-0.5*cu, 0])
+            dist();
+    }
+}
+
 *base();
-backboard();
+*backboard();
+*bumper();
+*frontBumper();
+distx1Bumper();
+//*distx2Bumper();
