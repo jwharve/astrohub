@@ -6,18 +6,18 @@
 #define CLOSE 180
 
 // servo pins
-#define SERVO_1 23
-#define SERVO_2 25
-#define SERVO_3 27
+#define SERVO_1 9
+#define SERVO_2 10
+#define SERVO_3 11
 
 // distance sensor pins
-#define TRIG_1 11
-#define TRIG_2 15
-#define TRIG_3 19
+#define TRIG_1 3
+#define TRIG_2 5
+#define TRIG_3 7
 
-#define ECHO_1 13
-#define ECHO_2 17
-#define ECHO_3 21
+#define ECHO_1 4
+#define ECHO_2 6
+#define ECHO_3 8
 
 char incomingChar = 0;
 double distance = 0;
@@ -45,6 +45,7 @@ void setup()
 
 void loop()
 {
+
   if (Serial.available() >0)
   {
     // read character
@@ -57,27 +58,34 @@ void loop()
           Servo1.write(OPEN);
           delay(3000);
           Servo1.write(CLOSE);
+          break;
         case 'b':
           // move servo 2
           Servo2.write(OPEN);
           delay(3000);
           Servo2.write(CLOSE);
+          break;
         case 'c':
           // move servo 3
           Servo3.write(OPEN);
           delay(3000);
           Servo3.write(CLOSE);
+          break;
         case 'd':
           // read distance sensor 1
           distance = Sensor1.measureDistanceCm();
+          Serial.println(distance);
+          break;
         case 'e':
           // read distance sensor 2
           distance = Sensor2.measureDistanceCm();
           Serial.println(distance);
+          break;
         case 'f':
           // read distance sensor 3
           distance = Sensor3.measureDistanceCm();
           Serial.println(distance);
+          break;
     }  
     distance = 0;
   }
