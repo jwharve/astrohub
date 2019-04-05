@@ -1,4 +1,4 @@
-CC = gcc
+CC = g++
 CFLAGS = -Wall -g
 LIBS = -lwiringPi
 
@@ -12,7 +12,7 @@ EXE = $(SRCS:.cpp=)
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).c $(OBJS) $(DEPS)
+$(TARGET): $(TARGET).cpp $(OBJS) $(DEPS)
 	$(CC) -o $(TARGET) $(TARGET).cpp $(OBJS) $(CFLAGS) $(LIBS)
 
 %.o: %.c %.h $(DEPS)
