@@ -1,6 +1,7 @@
 #include "drive.h"
 #include "elevator.h"
 #include "pins.h"
+#include "Sensor.h"
 
 int main (int argc, char * argv[])
 {
@@ -20,6 +21,13 @@ int main (int argc, char * argv[])
 	turnLeft(5000);
 
 	driveOff();
+	
+	return 0;
+	Sensor rgb;
+	unsigned int red = rgb.readRed();
+	unsigned int green = rgb.readGreen();                
+	unsigned int blue = rgb.readBlue();
+	
 
 	return 0;
 }
