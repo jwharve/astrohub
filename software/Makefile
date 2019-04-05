@@ -3,17 +3,17 @@ CFLAGS = -Wall -g
 LIBS = -lwiringPi
 
 TARGET = main
-SRCS = elevator.c drive.c
+SRCS = elevator.cpp drive.cpp
 DEPS = pins.h
 
-OBJS = $(SRCS:.c=.o)
-HDRS = $(SRCS:.c=.h)
-EXE = $(SRCS:.c=)
+OBJS = $(SRCS:.cpp=.o)
+HDRS = $(SRCS:.cpp=.h)
+EXE = $(SRCS:.cpp=)
 
 all: $(TARGET)
 
 $(TARGET): $(TARGET).c $(OBJS) $(DEPS)
-	$(CC) -o $(TARGET) $(TARGET).c $(OBJS) $(CFLAGS) $(LIBS)
+	$(CC) -o $(TARGET) $(TARGET).cpp $(OBJS) $(CFLAGS) $(LIBS)
 
 %.o: %.c %.h $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
