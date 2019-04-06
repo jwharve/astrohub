@@ -18,14 +18,14 @@ void eleSetup()
 
 void up()
 {
-	digitalWrite(DI, LOW);
+	digitalWrite(DI, HIGH);
 
 	eleMove(ELEVATOR_STEPS);
 }
 
 void down()
 {
-	digitalWrite(DI, HIGH);
+	digitalWrite(DI, LOW);
 
 	eleMove(ELEVATOR_STEPS);
 }
@@ -205,16 +205,16 @@ void singleMove(char motor, int steps, char dir)
 	switch (motor)
 	{
 		case FRL:
-			pin = FR_STEP;
+			pin = FL_STEP;
 			break;
 		case FRR:
 			pin = FR_STEP;
 			break;
 		case RRL:
-			pin = FR_STEP;
+			pin = BL_STEP;
 			break;
 		case RRR:
-			pin = FR_STEP;
+			pin = BR_STEP;
 			break;
 		default:
 			return;
