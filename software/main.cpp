@@ -7,7 +7,7 @@
 int main (int argc, char * argv[])
 {
 	int fd;
-//	fd = arduinoSetup();
+	fd = arduinoSetup();
 
 
 	eleSetup();
@@ -22,8 +22,9 @@ int main (int argc, char * argv[])
 
 	//return 0;
 
-	up();
-
+	//down();
+	//up();
+	collection(fd);
 	return 0;
 
 	driveOn();
