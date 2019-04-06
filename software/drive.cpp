@@ -33,7 +33,7 @@ void driveSetup()
 
 void driveForward (int steps)
 {
-	digitalWrite(FR_DIR, LOW);
+	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, HIGH);
 	digitalWrite(BR_DIR, HIGH);
 	digitalWrite(BL_DIR, LOW);
@@ -43,7 +43,7 @@ void driveForward (int steps)
 
 void driveBackward (int steps)
 {
-	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, HIGH);
@@ -53,20 +53,20 @@ void driveBackward (int steps)
 
 void strafeRight (int steps)
 {
-	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, HIGH);
-	digitalWrite(BR_DIR, LOW);
-	digitalWrite(BL_DIR, LOW);
+	digitalWrite(BR_DIR, HIGH);
+	digitalWrite(BL_DIR, HIGH);
 
 	move(steps);
 }
 
 void strafeLeft (int steps)
 {
-	digitalWrite(FR_DIR, LOW);
+	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, LOW);
-	digitalWrite(BR_DIR, HIGH);
-	digitalWrite(BL_DIR, HIGH);
+	digitalWrite(BR_DIR, LOW);
+	digitalWrite(BL_DIR, LOW);
 
 	move(steps);
 }
@@ -105,6 +105,7 @@ void move(int steps)
 	}
 	return;
 */
+
 	float del[2*NUM_RAMP];
 	int i,j;
 
@@ -152,5 +153,6 @@ void move(int steps)
 		delayMicroseconds((unsigned int)(del[j]));
 		j++;
 	}
+
 }
 

@@ -7,21 +7,24 @@
 int main (int argc, char * argv[])
 {
 	int fd;
-//	fd = arduinoSetup();
+	fd = arduinoSetup();
 
 	driveSetup();
 	eleSetup();
 
-	dropRight();
-	return 0;
+	printf("%f\n",distance1(fd));
+	printf("%f\n",distance2(fd));
+	printf("%f\n",distance3(fd));
 
-//	down();
-	collection(fd);
-	delay(5000);
-	up();
 
-	dropBack();
-	dump1(fd);
+	driveOn();
+	strafeRight(600);
+//	driveBackward(1000);
+//	delay(1000);
+//	driveForward(1000);
+	driveOff();
+
+
 	return 0;
 
 //	down();return 0;
