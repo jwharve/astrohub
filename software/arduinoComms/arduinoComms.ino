@@ -2,7 +2,7 @@
 #include <HCSR04.h>
 
 // open and close angles
-#define OPEN 0
+#define OPEN 20
 #define CLOSE 180
 
 #define COLLECT 0
@@ -47,6 +47,11 @@ void setup()
   Servo2.attach(SERVO_2);
   Servo3.attach(SERVO_3);
   Collection.attach(COLLECTION);
+
+  Servo1.write(CLOSE);
+  Servo2.write(OPEN);
+  Servo3.write(CLOSE);
+  Collection.write(NOT_COLLECT);
 }
 
 void loop()
@@ -67,9 +72,9 @@ void loop()
           break;
         case 'b':
           // move servo 2
-          Servo2.write(OPEN);
-          delay(3000);
           Servo2.write(CLOSE);
+          delay(3000);
+          Servo2.write(OPEN);
           break;
         case 'c':
           // move servo 3
