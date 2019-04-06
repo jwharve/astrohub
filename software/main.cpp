@@ -10,6 +10,9 @@ int main (int argc, char * argv[])
 	driveSetup();
 
 	driveOff();
+	
+	singleMove(FRR, 10, UP)
+	
 	return;
 
 	driveOn();

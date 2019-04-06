@@ -196,3 +196,39 @@ void eleMove(int steps)
 		delay(1);
 	}
 }
+
+void singleMove(char motor, int steps, char dir)
+{
+	char pin;
+	int i;
+	
+	switch (motor)
+	{
+		case FRL:
+			pin = FR_STEP;
+			break;
+		case FRL:
+			pin = FR_STEP;
+			break;
+		case FRL:
+			pin = FR_STEP;
+			break;
+		case FRL:
+			pin = FR_STEP;
+			break;
+		case default:
+			return;
+	}
+	
+	
+	digitalWrite(DI, dir);
+	
+	
+	for (i = 0; i < steps; i++)
+	{
+		digitalWrite(pin,HIGH);
+		delay(1);
+		digitalWrite(pin,LOW);
+		delay(1);
+	}
+}
