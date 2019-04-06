@@ -13,7 +13,6 @@
 #define FL_STEP 10
 #define BR_STEP 31
 #define BL_STEP 26
-#define ENABLE 12
 
 // WHEELS
 #define STEP 13
@@ -21,5 +20,6 @@
 #define FL_DIR 14
 #define BR_DIR 21
 #define BL_DIR 22
+#define ENABLE 12
 
 #endif

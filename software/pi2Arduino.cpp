@@ -15,7 +15,7 @@ void dump3(int fd)
 	arduinoWriteChar(fd,'c');
 }
 
-void collect(int fd)
+void collection(int fd)
 {
 	arduinoWriteChar(fd, 'd');
 }

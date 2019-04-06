@@ -6,14 +6,22 @@
 
 int main (int argc, char * argv[])
 {
+	int fd;
+//	fd = arduinoSetup();
+
+
 	eleSetup();
 	driveSetup();
 
 	driveOff();
 	
-	singleMove(FRR, 10, UP)
+	singleMove(RRR, 100, 1);
 	
-	return;
+	return 0;
+
+	down();
+
+	return 0;
 
 	driveOn();
 //	driveForward(500);
@@ -23,12 +31,16 @@ int main (int argc, char * argv[])
 	delay(500);
 	strafeRight(750);
 	driveOff();
-	return 0;
 
 	turnLeft(5000);
 
 	driveOff();
-	
+
+	collection(fd);
+	dump1(fd);
+	dump2(fd);
+	dump3(fd);
+
 	return 0;
 	Sensor rgb;
 	unsigned int red = rgb.readRed();
