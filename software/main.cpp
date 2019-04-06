@@ -15,7 +15,10 @@ int main (int argc, char * argv[])
 
 	driveOff();
 	
-	singleMove(RRR, 100, 1);
+	singleMove(FRR, 100, 1);
+	//singleMove(FRL, 100, 1);
+	//singleMove(RRR, 100, 1);
+	//singleMove(RRL, 100, 1);
 	
 	return 0;
 
