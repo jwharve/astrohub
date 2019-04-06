@@ -3,8 +3,8 @@
 
 #include "pins.h"
 
-#define ELEVATOR_STEPS 	1400
-#define DROP_STEPS 	200
+#define ELEVATOR_STEPS 	1450
+#define DROP_STEPS 	300
 
 #define FRL 0
 #define FRR 1

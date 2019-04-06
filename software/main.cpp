@@ -7,11 +7,24 @@
 int main (int argc, char * argv[])
 {
 	int fd;
-	fd = arduinoSetup();
+//	fd = arduinoSetup();
 
-
-	eleSetup();
 	driveSetup();
+	eleSetup();
+
+	dropRight();
+	return 0;
+
+//	down();
+	collection(fd);
+	delay(5000);
+	up();
+
+	dropBack();
+	dump1(fd);
+	return 0;
+
+//	down();return 0;
 
 	driveOff();
 
@@ -25,6 +38,11 @@ int main (int argc, char * argv[])
 	//down();
 	//up();
 	collection(fd);
+	delay(3000);
+
+	up();
+
+//	dumpRight();
 	return 0;
 
 	driveOn();
