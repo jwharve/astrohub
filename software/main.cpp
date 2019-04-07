@@ -7,10 +7,48 @@
 int main (int argc, char * argv[])
 {
 	int fd;
-	fd = arduinoSetup();
+//	fd = arduinoSetup();
+
+
 
 	driveSetup();
 	eleSetup();
+
+	driveOn();
+	strafeRight(1600);
+	strafeLeft(1600);
+	driveOff();
+	return 0;
+
+	down();
+	collection(fd);
+	delay(3000);
+
+	up();
+
+	dropFront();
+
+	return 0;
+
+	collection(fd);
+
+	dropRight();
+	delay(250);
+	dropLeft();
+	delay(250);
+	dropFront();
+	delay(250);
+	dropBack();
+
+	return 0;
+	down();
+	collection(fd);
+	delay(3000);
+	up();
+	dropRight();
+	dump1(fd);
+	dump2(fd);
+	dump3(fd);
 
 	printf("%f\n",distance1(fd));
 	printf("%f\n",distance2(fd));
@@ -18,7 +56,8 @@ int main (int argc, char * argv[])
 
 
 	driveOn();
-	strafeRight(600);
+//	turnRight(1000);
+//	strafeRight(600);
 //	driveBackward(1000);
 //	delay(1000);
 //	driveForward(1000);

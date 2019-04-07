@@ -3,9 +3,10 @@
 
 #include "pins.h"
 
-#define START_DELAY 3 /* cannot be larger than 16 */
-#define ACCEL 1.01
-#define NUM_RAMP 111 /* number of accelerations need to get to full speed (1) */
+#define START_DELAY 4 /* cannot be larger than 16 */
+#define ACCEL 1.005
+#define NUM_RAMP 279 /* number of accelerations need to get to full speed (1) */
+#define TOP_SPEED 1000
 
 void driveOn();
 void driveOff();
