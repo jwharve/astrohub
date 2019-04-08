@@ -43,7 +43,7 @@ void driveForward (int steps)
 
 void driveBackward (int steps)
 {
-	digitalWrite(FR_DIR, LOW);
+	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, HIGH);
@@ -54,9 +54,9 @@ void driveBackward (int steps)
 void strafeRight (int steps)
 {
 	digitalWrite(FR_DIR, LOW);
-	digitalWrite(FL_DIR, HIGH);
-	digitalWrite(BR_DIR, HIGH);
-	digitalWrite(BL_DIR, HIGH);
+	digitalWrite(FL_DIR, LOW);
+	digitalWrite(BR_DIR, LOW);
+	digitalWrite(BL_DIR, LOW);
 
 	move(steps);
 }
@@ -64,9 +64,9 @@ void strafeRight (int steps)
 void strafeLeft (int steps)
 {
 	digitalWrite(FR_DIR, HIGH);
-	digitalWrite(FL_DIR, LOW);
-	digitalWrite(BR_DIR, LOW);
-	digitalWrite(BL_DIR, LOW);
+	digitalWrite(FL_DIR, HIGH);
+	digitalWrite(BR_DIR, HIGH);
+	digitalWrite(BL_DIR, HIGH);
 
 	move(steps);
 }
@@ -75,8 +75,8 @@ void turnRight (int steps)
 {
 	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, LOW);
-	digitalWrite(BR_DIR, LOW);
-	digitalWrite(BL_DIR, LOW);
+	digitalWrite(BR_DIR, HIGH);
+	digitalWrite(BL_DIR, HIGH);
 
 	move(steps);
 }
@@ -85,8 +85,8 @@ void turnLeft (int steps)
 {
 	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, HIGH);
-	digitalWrite(BR_DIR, HIGH);
-	digitalWrite(BL_DIR, HIGH);
+	digitalWrite(BR_DIR, LOW);
+	digitalWrite(BL_DIR, LOW);
 
 	move(steps);
 }
