@@ -15,8 +15,10 @@ int main (int argc, char * argv[])
 	eleSetup();
 
 	driveOn();
+//	driveForward(1000);
 	strafeRight(1600);
-	strafeLeft(1600);
+//	strafeLeft(1600);
+	turnRight(1000);
 	driveOff();
 	return 0;
 
