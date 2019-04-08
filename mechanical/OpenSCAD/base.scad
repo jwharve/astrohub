@@ -257,7 +257,7 @@ module distx1Bumper()
 
 *base();
 *backboard();
-*bumper();
+bumper();
 *frontBumper();
-distx1Bumper();
+*distx1Bumper();
 //*distx2Bumper();
