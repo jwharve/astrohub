@@ -33,7 +33,7 @@ void driveSetup()
 
 void driveForward (int steps)
 {
-	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, HIGH);
 	digitalWrite(BR_DIR, HIGH);
 	digitalWrite(BL_DIR, LOW);
