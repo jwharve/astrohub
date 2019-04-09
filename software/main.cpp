@@ -1,5 +1,5 @@
 #include "drive.h"
-#include "elevator.h"
+//#include "elevator.h"
 #include "pins.h"
 #include "colorSensor.h"
 #include "pi2Arduino.h"
@@ -15,6 +15,17 @@
 
 int main (int argc, char * argv[])
 {
+
+	int fd; 
+	fd = arduinoSetup();
+
+	collection(fd,0);
+
+
+	return 0;
+
+
+/*
 	// time variables
 	long int start_time;
 	long int match_time;
