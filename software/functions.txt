@@ -1,0 +1,60 @@
+DRIVE Functions:
+
+driveOn(); - enable drive motors
+driveOff(); - disable drive motors
+driveSetup(); - set up drive pins
+driveForward(int steps); - drive forward certain number of steps
+driveBackward(int steps); - drive backward certain number of steps
+strafeRight(int steps); - strafe right ""
+strafeLeft(int steps); - strafe left ""
+turnRight(int steps); - turn right ""
+turnLeft(int steps); - turn left ""
+void move(int) - USED INSIDE DRIVE FUNCTIONS, NEVER CALLED OUTSIDE
+
+---------
+
+PI2ARDUINO Functions:
+
+int arduinoSetup(void); - returns fd to send to all other functions, open comms
+void aruinoClose(int fd) - closes communications	
+void arduinoWriteString(int fd, char * string); - writes string to arduino, NEVER CALLED OUTSIDE
+void arduinoWriteChar(int fd, char char); - writes char, NEVER CALLED OUTSIDE
+void arduinoReadString(int fd); - NEVER CALLED OUTSIDE
+void arduinoReadChar(int fd); - NEVER CALLED OUTSIDE
+
+void collection(int fd, int num); - run collection and store in designated location
+float distance1(int fd); - return distance read by sensor 1
+float distance2(int fd); - return distance read by sensor 2
+float distance3(int fd); - return distance read by sensor 3
+
+----------
+
+COLORSENSOR Functions:
+
+unsigned int Sensor.readRed(); - read RGB
+unsigned int Sensor.readGreen();
+unsigned int Sensor.readBlue();
+
+----------
+
+VISION Function:
+
+void loc(int C, int R, float *x, float *y);
+-	C = column, R = row of block location
+	x = horizontal distance to block
+	y = veritcal distance to block
+
+----------
+
+GAME Functions:
+
+void fromHome(int fd); - from starting position, leave base
+void doHome(int fd); - to first quandrant from starting position
+void moveHome(int fd); - move from home quandrant to next
+void moveCorner(int fd); - move from current quandrant to next
+void doCorner(int fd); - do current quadrant
+void toBase(int fd); - go to base in current quandrant
+void dumpBase(int fd, int location); - open doors of specified location
+void goHome(int fd, int base, int current); - navigate home from any location in field
+						base is home base, current is current quadrant
+---------
