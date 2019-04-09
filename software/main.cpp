@@ -23,6 +23,14 @@ int main (int argc, char * argv[])
 	int i = 0;
 	base = 0;
 
+	int fd;
+
+	// setup pins, disable drive
+	driveSetup();
+	driveOff();
+
+	fd = arduinoSetup();
+
 	// busy wait for start button
 
 	// start timer
@@ -110,6 +118,7 @@ int main (int argc, char * argv[])
 			clock_gettime(CLOCK_REALTIME, &get_time);
 			match_time = get_time.tv_sec - start_time;
 	
+			arduinoClose(fd);
 			return 0;
 		}
 	}
@@ -119,6 +128,7 @@ int main (int argc, char * argv[])
 		// go home from anywhere in field
 		// goHome(i);
 
+		arduinoClose(fd);
 		return 0;
 	}
 
