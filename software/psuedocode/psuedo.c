@@ -54,6 +54,9 @@ int main (void)
 			// move corner
 			// moveCorner();
 		}
+		clock_gettime(CLOCK_REALTIME, &getTime);
+		matchTime = getTime.tv_sec - startTime;
+
 	}
 
 	// start drop off process
@@ -69,6 +72,9 @@ int main (void)
 		// drop off
 		// dumpBase at home will raise a flag
 		// dumpBase(homeBase+i);
+
+		clock_gettime(CLOCK_REALTIME, &getTime);
+		matchTime = getTime.tv_sec;
 
 		return 0;
 	}
