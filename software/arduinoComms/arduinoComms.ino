@@ -34,6 +34,9 @@
 // breakbeam pin
 #define BREAK A6
 
+
+
+
 #define UNBROKEN 0
 
 #define ELEVATOR_STEPS 1450
