@@ -34,12 +34,13 @@
 // breakbeam pin
 #define BREAK A6
 
-
-#define UNBROKEN 1
+#define UNBROKEN 0
 
 #define ELEVATOR_STEPS 1450
 #define DROP_STEPS 225
 
+#define GOOD 'c'
+#define BAD 'n'
 
 // cases
 #define S1 'a'
@@ -75,6 +76,7 @@ void dropFront(void);
 void dropBack(void);
 void dropLeft(void);
 void dropRight(void);
+void upSome(void);
 
 void setup()
 {
@@ -87,6 +89,7 @@ void setup()
   pinMode(BR_STEP, OUTPUT);
   pinMode(BL_STEP, OUTPUT);
   pinMode(DIR, OUTPUT);
+  pinMode(BREAK, INPUT_PULLUP);
   pinMode(ENABLE, OUTPUT);
   digitalWrite(ENABLE,HIGH);
   
@@ -163,9 +166,20 @@ void loop()
             Collection.write(COLLECT);
             delay(1000);
             Collection.write(NOT_COLLECT);
-            delay(250);
+            delay(500);
           }
           digitalWrite(ENABLE,LOW);
+          if (digitalRead(BREAK) != UNBROKEN)
+          {
+            Serial.println(GOOD);
+          }
+          else
+          {
+            Serial.println(BAD);
+            upSome();
+            digitalWrite(ENABLE,HIGH);
+            break;
+          }
           up();
           dropFront();
           down();
@@ -179,9 +193,20 @@ void loop()
             Collection.write(COLLECT);
             delay(1000);
             Collection.write(NOT_COLLECT);
-            delay(250);
+            delay(500);
           }
           digitalWrite(ENABLE,LOW);
+          if (digitalRead(BREAK) != UNBROKEN)
+          {
+            Serial.println(GOOD);
+          }
+          else
+          {
+            Serial.println(BAD);
+            upSome();
+            digitalWrite(ENABLE,HIGH);
+            break;
+          }
           up();
           dropBack();
           down();
@@ -195,9 +220,20 @@ void loop()
             Collection.write(COLLECT);
             delay(1000);
             Collection.write(NOT_COLLECT);
-            delay(250);
+            delay(500);
           }
           digitalWrite(ENABLE,LOW);
+          if (digitalRead(BREAK) != UNBROKEN)
+          {
+            Serial.println(GOOD);
+          }
+          else
+          {
+            Serial.println(BAD);
+            upSome();
+            digitalWrite(ENABLE,HIGH);
+            break;
+          }
           up();
           dropLeft();
           down();
@@ -211,9 +247,20 @@ void loop()
             Collection.write(COLLECT);
             delay(1000);
             Collection.write(NOT_COLLECT);
-            delay(250);
+            delay(500);
           }
           digitalWrite(ENABLE,LOW);
+          if (digitalRead(BREAK) != UNBROKEN)
+          {
+            Serial.println(GOOD);
+          }
+          else
+          {
+            Serial.println(BAD);
+            upSome();
+            digitalWrite(ENABLE,HIGH);
+            break;
+          }
           up();
           dropRight();
           down();
@@ -278,8 +325,7 @@ void downFull(void)
     digitalWrite(FR_STEP,HIGH);
     digitalWrite(FL_STEP,HIGH);
     delay(1);
-  }
-  
+  }  
 }
 
 void dropFront(void)
@@ -378,6 +424,25 @@ void dropRight(void)
     delay(1);
     digitalWrite(FL_STEP,LOW);
     digitalWrite(BL_STEP,LOW);
+    delay(1);
+  }
+}
+
+void upSome(void)
+{
+  int i;
+  digitalWrite(DIR,HIGH);
+  for (i = 0; i < (ELEVATOR_STEPS - 3*ELEVATOR_STEPS/4); i++)
+  {
+    digitalWrite(BR_STEP,HIGH);
+    digitalWrite(BL_STEP,HIGH);
+    digitalWrite(FR_STEP,HIGH);
+    digitalWrite(FL_STEP,HIGH);
+    delay(1);
+    digitalWrite(BR_STEP,LOW);
+    digitalWrite(BL_STEP,LOW);
+    digitalWrite(FR_STEP,HIGH);
+    digitalWrite(FL_STEP,HIGH);
     delay(1);
   }
 }
