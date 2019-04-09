@@ -3,13 +3,128 @@
 #include "pins.h"
 #include "colorSensor.h"
 #include "pi2Arduino.h"
+#include <time.h>
+
+#define RED 0
+#define YELLOW 1
+#define BLUE 2
+#define GREEN 3
+
+// time threshold in seconds
+#define time_thresh 120
 
 int main (int argc, char * argv[])
 {
+	// time variables
+	long int start_time;
+	long int match_time;
+	struct timespec get_time;
+
+	int i = 0;
+	base = 0;
+
+	// busy wait for start button
+
+	// start timer
+	clock_gettime(CLOCK_REALTIME, &get_time);
+	start_time = get_time.tv_sec;
+
+	// read home base color from color sensor
+	Sensor rgb;
+	unsigned int red = rgb.readRed();
+	unsigned int green = rgb.readGreen();                
+	unsigned int blue = rgb.readBlue();
+
+	// determine colors based on treshold
+	// red: 255-0-0
+	// yellow: 255-255-0
+	// blue: 0-0-255
+	// green: 0-255-0
+
+	if (red > 200 && green < 50 && blue < 50)
+	{
+		base = RED;
+	}
+	else if (red > 200 && green > 200 && blue < 50)
+	{
+		base = YELLOW;
+	}
+	else if (red < 50 && green < 50 && blue > 200)
+	{
+		base = BLUE;
+	}
+	else if (red < 50 && green > 200 && blue < 50)
+	{
+		base = GREEN;
+	}
+	else
+	{
+		base = -1;
+	}
+
+	printf("%d\n", base);
+
+	clock_gettime(CLOCK_REALTIME, &get_time);
+	match_time = get_time.tv_sec - start_time;
+
+	for (i = 0; (i < 3) && (match_time < time_thresh); i++)
+	{
+		if (i == 0)
+		{
+			// move from home base function
+			// fromHome();
+
+			// do corner at starting orientation
+			// doHome();
+
+			// move to next corner
+			// moveCorner();
+		}
+		else
+		{
+			// do corner
+			// doCorner(base);
+
+			// move to next corner
+			// moveCorner();
+		}
+		clock_gettime(CLOCK_REALTIME, &get_time);
+		match_time = get_time.tv_sec - start_time;
+	}
+
+	// after collecting in all zones, start drop off process
+	if (match_time > time_thresh)
+	{
+		for (i = 0; (i < 3) && (match_time < time_thresh); i++)
+		{
+			// move corner
+			// moveCorner();
+	
+			// go to base
+			// toBase();
+	
+			// drop off
+			// dumpBase at home will raise the flag
+			// dumpBase(base+i);
+	
+			clock_gettime(CLOCK_REALTIME, &get_time);
+			match_time = get_time.tv_sec - start_time;
+	
+			return 0;
+		}
+	}
+
+	if (match_time < time_thresh)
+	{
+		// go home from anywhere in field
+		// goHome(i);
+
+		return 0;
+	}
+
+/*
 	int fd;
 //	fd = arduinoSetup();
-
-
 
 	driveSetup();
 	eleSetup();
@@ -111,8 +226,7 @@ int main (int argc, char * argv[])
 	Sensor rgb;
 	unsigned int red = rgb.readRed();
 	unsigned int green = rgb.readGreen();                
-	unsigned int blue = rgb.readBlue();
-	
-
+	unsigned int blue = rgb.readBlue();	
+*/
 	return 0;
 }
