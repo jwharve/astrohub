@@ -13,7 +13,7 @@ difference()
         // bottom band
         difference()
         {
-            cylinder(h = band_thickness, d = 25, center = false);
+            cylinder(h = band_thickness, d = 35, center = false);
             translate([7, 0, 0])
                 cylinder(h = 2*band_thickness, d = 3, center = true);
             cylinder(h = band_thickness, d = 9, center = false);
@@ -21,7 +21,7 @@ difference()
         
         // top band
         translate([0,0,height-band_thickness])
-        cylinder(h=band_thickness, d = 25, center=false);
+        cylinder(h=band_thickness, d = 20, center=false);
     }
     cylinder(h = height,d = 6, center = false);
 }
