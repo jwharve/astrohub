@@ -2,29 +2,47 @@
 
 void dump1(int fd)
 {
-	arduinoWriteChar(fd, 'a');
+	arduinoWriteChar(fd, S1);
 }
 
 void dump2(int fd)
 {
-	arduinoWriteChar(fd,'b');
+	arduinoWriteChar(fd,S2);
 }
 
 void dump3(int fd)
 {
-	arduinoWriteChar(fd,'c');
+	arduinoWriteChar(fd,S3);
 }
 
-void collection(int fd)
+void collection(int fd, int num)
 {
-	arduinoWriteChar(fd, 'd');
+	switch (num)
+	{
+		case 0:
+			arduinoWriteChar(fd,CL);
+			arduinoReadChar(fd);
+			break;
+		case 1:
+			arduinoWriteChar(fd,CB);
+			arduinoReadChar(fd);
+			break;
+		case 2:
+			arduinoWriteChar(fd,CR);
+			arduinoReadChar(fd);
+			break;
+		case 3:
+			arduinoWriteChar(fd,CF);
+			arduinoReadChar(fd);
+			break;
+	}
 }
 
 float distance1(int fd)
 {
 	static char *message;
 
-	arduinoWriteChar(fd, 'e');
+	arduinoWriteChar(fd, D1);
 	message = arduinoReadString(fd);
 
 	return atof(message);
@@ -34,7 +52,7 @@ float distance2(int fd)
 {
 	static char *message;
 
-	arduinoWriteChar(fd, 'f');
+	arduinoWriteChar(fd, D2);
 	message = arduinoReadString(fd);
 
 	return atof(message);
@@ -44,7 +62,7 @@ float distance3(int fd)
 {
 	static char *message;
 
-	arduinoWriteChar(fd, 'g');
+	arduinoWriteChar(fd, D3);
 	message = arduinoReadString(fd);
 
 	return atof(message);

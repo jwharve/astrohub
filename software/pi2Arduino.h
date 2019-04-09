@@ -9,10 +9,22 @@
 #include <stdio.h>
 #include <string.h>
 
-void dump1(int);
-void dump2(int);
-void dump3(int);
-void collection(int);
+#define S1 'a'
+#define S2 'b'
+#define S3 'c'
+#define D1 'd'
+#define D2 'e'
+#define D3 'f'
+#define RF 'g'
+#define CF 'h'
+#define CB 'i'
+#define CL 'j'
+#define CR 'k'
+
+#define GOOD 'c'
+#define BAD 'n'
+
+void collection(int, int);
 float distance1(int);
 float distance2(int);
 float distance3(int);
