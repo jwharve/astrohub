@@ -166,7 +166,7 @@ int main (int argc, char * argv[])
 			{
 				// go to base
 				clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
-				printf("<%3ld> GOING TO BASE %d\n",currentColor, match_time);
+				printf("<%3ld> GOING TO BASE %d\n", match_time, currentColor);
 				// toBase();
 
 				// drop off
