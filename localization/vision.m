@@ -22,11 +22,12 @@ numCols = 315;
 numRows = 207;
 
 
-height = (10.75-1.25)*2.54;
+height = (10.375-2)*2.54;
 
 
-C = 229;
-R = 71;
+
+C = 214;
+R = 74;
 %R = 207;
 
 
@@ -36,5 +37,8 @@ pV = ((numRows - R)-numRows/2)/numRows;
 hDeg = degH0 + degH/2 + atand(pH*h/d);
 vDeg = degV0 + degV/2 + atand(pV*v/d);
 
-y = height*tand(vDeg)
-x = sqrt(y^2+height^2)*tand(hDeg)/2.54
+y = height*tand(vDeg);
+x = sqrt(y^2+height^2)*tand(hDeg);
+
+x
+y

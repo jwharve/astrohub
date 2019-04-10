@@ -2,6 +2,7 @@
 #define VISION_H
 
 #include <math.h>
+#include "libpixyusb2.h"
 
 #define PI 3.14159265
 
@@ -17,6 +18,6 @@
 #define NUM_COLS 315
 #define NUM_ROWS 207
 
-#define HEIGHT ((10.75-1.25)*2.54)
+#define HEIGHT ((10.375-1.25)*2.54)
 
 #endif
