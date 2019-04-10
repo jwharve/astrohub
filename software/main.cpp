@@ -16,14 +16,20 @@
 int main (int argc, char * argv[])
 {
 
-	int fd; 
-	fd = arduinoSetup();
+	int fd;
+//	fd = arduinoSetup();
 
-	collection(fd,0);
+//	collection(fd,1);
+/*
+	Sensor my;
+	while(1)
+	{
+		my.readRed();
+		
 
 
 	return 0;
-
+*/
 
 /*
 	// time variables
@@ -47,8 +53,9 @@ int main (int argc, char * argv[])
 	// start timer
 	clock_gettime(CLOCK_REALTIME, &get_time);
 	start_time = get_time.tv_sec;
-
+*/
 	// read home base color from color sensor
+	int base;
 	Sensor rgb;
 	unsigned int red = rgb.readRed();
 	unsigned int green = rgb.readGreen();                
@@ -83,6 +90,10 @@ int main (int argc, char * argv[])
 
 	printf("%d\n", base);
 
+	printf("r = %d\n", red);
+	printf("g = %d\n", green);
+	printf("b = %d\n", blue);
+/*
 	clock_gettime(CLOCK_REALTIME, &get_time);
 	match_time = get_time.tv_sec - start_time;
 
