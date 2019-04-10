@@ -14,6 +14,7 @@
 // time threshold in seconds
 #define TIME_THRESH 120
 
+int fd;
 
 void handle_SIGINT(int unused)
 {
@@ -36,14 +37,17 @@ int main (int argc, char * argv[])
 	int i,j;
 	int base;
 
-	int fd;
+	Sensor rgb;
+	unsigned int red;
+	unsigned int green;
+	unsigned int blue;
 
 	// setup
 	printf("BEGINNING SETUP...\n");
 	driveSetup();
 	fd = arduinoSetup();
 	printf("SETUP FINISHED\n\n");
-	
+
 	// busy wait for start button
 	printf("BUSY WAIT...\n");
 
@@ -52,14 +56,10 @@ int main (int argc, char * argv[])
 	start_time = get_time.tv_sec;
 	printf("MATCH STARTED\n");
 
-	
 	// read home base color from color sensor
-	int base;
-	Sensor rgb;
-	unsigned int red = rgb.readRed();
-	unsigned int green = rgb.readGreen();                
-	unsigned int blue = rgb.readBlue();
-
+	red = rgb.readRed();
+	green = rgb.readGreen();
+	blue = rgb.readBlue();
 	// determine colors based on treshold
 	// red: 255-0-0
 	// yellow: 255-255-0
@@ -109,7 +109,7 @@ int main (int argc, char * argv[])
 		if (currentColor == base)
 		{
 			printf("STARTING HOME BASE (%d)\n",currentColor);
-			
+
 			// move from home base function
 			printf("MOVING FROM HOME...\n");
 			// fromHome();
@@ -119,19 +119,19 @@ int main (int argc, char * argv[])
 			// doHome();
 
 			// move to next corner
-			printf("MOVING TO NEXT CORNER\N");
+			printf("MOVING TO NEXT CORNER\n");
 			// moveCorner();
 		}
 		else
 		{
 			printf("STARTING CORNER (%d)\n",currentColor);
-			
+
 			// do corner
 			printf("DOING CORNER...\n");
 			// doCorner(base);
 
 			// move to next corner
-			printf("MOVING TO NEXT CORNER\N");
+			printf("MOVING TO NEXT CORNER\n");
 			// moveCorner();
 		}
 		clock_gettime(CLOCK_REALTIME, &get_time);
@@ -146,27 +146,24 @@ int main (int argc, char * argv[])
 		{
 			j++;
 			currentColor = (i + base) % 4;
-			
+
+			// move corner
+			printf("MOVING TO NEXT CORNER\n");
+			// moveCorner();
+
 			if (currentColor != base)
 			{
 				// go to base
-				printf("GOING TO BASE %d\n");
+				printf("GOING TO BASE %d\n",currentColor);
 				// toBase();
-				
+
 				// drop off
 				// dumpBase at home will raise the flag
 				// dumpBase(base+i);
 			}
-			
-			// move corner
-			printf("MOVING TO NEXT CORNER\N");
-			// moveCorner();
-	
+
 			clock_gettime(CLOCK_REALTIME, &get_time);
 			match_time = get_time.tv_sec - start_time;
-	
-			arduinoClose(fd);
-			return 0;
 		}
 	}
 
@@ -175,11 +172,11 @@ int main (int argc, char * argv[])
 	// go home from anywhere in field
 	printf("GOING HOME...TIME: %ld\n",match_time);
 	// goHome(i);
-	
+
 	printf("RAISING THE FLAG\n");
 	// dumpBase at home will raise the flag
 	// dumpBase(base+i);
-	
+
 	printf("DONE.\n");
 	arduinoClose(fd);
 	return 0;
