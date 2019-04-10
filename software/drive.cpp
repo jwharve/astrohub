@@ -1,4 +1,5 @@
 #include "drive.h"
+#include "pi2Arduino.h"
 
 void driveOn()
 {
@@ -31,24 +32,24 @@ void driveSetup()
 	digitalWrite(BL_DIR, LOW);
 }
 
-void driveForward (int steps)
+void driveBackward (int steps)
 {
 	digitalWrite(FR_DIR, LOW);
 	digitalWrite(FL_DIR, HIGH);
 	digitalWrite(BR_DIR, HIGH);
 	digitalWrite(BL_DIR, LOW);
 
-	move(steps);
+	move(steps,RAMP);
 }
 
-void driveBackward (int steps)
+void driveForward (int steps)
 {
 	digitalWrite(FR_DIR, HIGH);
 	digitalWrite(FL_DIR, LOW);
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, HIGH);
 
-	move(steps);
+	move(steps,RAMP);
 }
 
 void strafeRight (int steps)
@@ -58,7 +59,7 @@ void strafeRight (int steps)
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, LOW);
 
-	move(steps);
+	move(steps,NO_RAMP);
 }
 
 void strafeLeft (int steps)
@@ -68,7 +69,7 @@ void strafeLeft (int steps)
 	digitalWrite(BR_DIR, HIGH);
 	digitalWrite(BL_DIR, HIGH);
 
-	move(steps);
+	move(steps,NO_RAMP);
 }
 
 void turnRight (int steps)
@@ -78,7 +79,10 @@ void turnRight (int steps)
 	digitalWrite(BR_DIR, HIGH);
 	digitalWrite(BL_DIR, HIGH);
 
-	move(steps);
+	if (steps != 5)
+		move(steps,RAMP);
+	else
+		move(5,NO_RAMP);
 }
 
 void turnLeft (int steps)
@@ -88,21 +92,25 @@ void turnLeft (int steps)
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, LOW);
 
-	move(steps);
+	if (steps != 5)
+		move(steps,RAMP);
+	else
+		move(5,NO_RAMP);
+
 }
 
-void move(int steps)
+void move(int steps, char ramp)
 {
-	if (0)
+	if (ramp == NO_RAMP)
 {
 	int i;
 
 	for (i = 0; i < steps; i++)
 	{
 		digitalWrite(STEP,HIGH);
-		delayMicroseconds(TOP_SPEED);
+		delayMicroseconds(NR_SPEED);
 		digitalWrite(STEP,LOW);
-		delayMicroseconds(TOP_SPEED);
+		delayMicroseconds(NR_SPEED);
 	}
 	return;
 }
@@ -158,3 +166,43 @@ else
 }
 }
 
+void straighten(int fd)
+{
+	float d1, d2;
+	int i;
+	bool prev;
+	bool curr = 0;
+
+	for (i = 0; i < NUM_STRAIGHT; i++)
+	{
+		prev = curr;
+		d1 = 0;
+		d2 = 0;
+		d1 += distance1(fd);
+		d2 += distance2(fd);
+		d1 += distance1(fd);
+		d2 += distance2(fd);
+		d1 += distance1(fd);
+		d2 += distance2(fd);
+
+		d1 = d1/3;
+		d2 = d2/3;
+
+		if ((d1 - d2) < -A_THRESH)
+		{
+			curr = 0;
+			turnLeft(5);
+		}
+		else if ((d1-d2) > A_THRESH)
+		{
+			curr = 0;
+			turnRight(5);
+		}
+		else
+		{
+			curr = 1;
+			if (prev == 1)
+				return;
+		}
+	}
+}

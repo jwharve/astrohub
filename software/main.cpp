@@ -1,9 +1,10 @@
 #include "drive.h"
-//#include "elevator.h"
+#include "vision.h"
 #include "pins.h"
 #include "colorSensor.h"
 #include "pi2Arduino.h"
 #include <time.h>
+#include <signal.h>
 
 #define RED 0
 #define YELLOW 1
@@ -13,10 +14,49 @@
 // time threshold in seconds
 #define time_thresh 120
 
+
+void handle_SIGINT(int unused)
+{
+	driveOff();
+	exit(0);
+}
+
 int main (int argc, char * argv[])
 {
+	signal(SIGINT, handle_SIGINT);
 
-	int fd;
+	int fd = arduinoSetup();
+
+	driveSetup();
+	driveOn();
+//	turnRight(atoi(argv[1]));
+	straighten(fd);
+	driveOff();
+	return 0;
+
+
+
+
+
+
+
+	float x,y;
+	pixy(&x,&y);
+
+
+
+	printf("X_MAIN - %f\n",x);
+	printf("Y_MAIN - %f\n",y);
+
+	return 0;
+//	float x = 0;
+//	float y = 0;
+
+	loc(213,73, &x, &y);
+
+	printf("%f %f\n", x, y);
+
+//	int fd;
 //	fd = arduinoSetup();
 
 //	collection(fd,1);
@@ -55,18 +95,18 @@ int main (int argc, char * argv[])
 	start_time = get_time.tv_sec;
 */
 	// read home base color from color sensor
-	int base;
-	Sensor rgb;
-	unsigned int red = rgb.readRed();
-	unsigned int green = rgb.readGreen();                
-	unsigned int blue = rgb.readBlue();
+//	int base;
+//	Sensor rgb;
+//	unsigned int red = rgb.readRed();
+//	unsigned int green = rgb.readGreen();                
+//	unsigned int blue = rgb.readBlue();
 
 	// determine colors based on treshold
 	// red: 255-0-0
 	// yellow: 255-255-0
 	// blue: 0-0-255
 	// green: 0-255-0
-
+/*
 	if (red > 200 && green < 50 && blue < 50)
 	{
 		base = RED;
@@ -93,6 +133,7 @@ int main (int argc, char * argv[])
 	printf("r = %d\n", red);
 	printf("g = %d\n", green);
 	printf("b = %d\n", blue);
+*/
 /*
 	clock_gettime(CLOCK_REALTIME, &get_time);
 	match_time = get_time.tv_sec - start_time;
