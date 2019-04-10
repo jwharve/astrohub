@@ -2,6 +2,7 @@
 #define VISION_H
 
 #include <math.h>
+#include "libpixyusb2.h"
 
 #define PI 3.14159265
 

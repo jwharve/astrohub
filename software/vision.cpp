@@ -39,3 +39,45 @@ void loc(int C, int R, float * x, float * y)
 
 	return;
 }
+
+int pixy(void)
+{
+	int  Result;
+	int i;
+	int max_y = 0;
+	int max_loc = -1;
+	float x, y;
+
+  // Initialize Pixy2 Connection //
+  {
+	printf("Connecting...\n");
+    Result = pixy.init();
+
+    if (Result < 0)
+    {
+      printf ("Error\n");
+      printf ("pixy.init() returned %d\n", Result);
+      return -1;
+    }
+
+    printf ("Success\n");
+  }
+  
+  
+  pixy.ccc.getBlocks();
+ 
+
+	for (i = 0; i < pixy.ccc.numBlocks; i++)
+	{
+		if (pixy.ccc.blocks[i].m_y > max_y)
+		{
+			max_y = pixy.ccc.blocks[i].m_y
+			max_loc = i;
+		}
+	}
+	
+	loc(pixy.ccc.blocks[max_loc].m_x, pixy.ccc.blocks[max_loc].m_y, &x, &y)
+	
+	printf("X - %f\n");
+	printf("Y - %f\n");
+}
