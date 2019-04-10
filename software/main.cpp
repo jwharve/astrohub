@@ -3,6 +3,7 @@
 #include "pins.h"
 #include "colorSensor.h"
 #include "pi2Arduino.h"
+#include "pickup.h"
 #include <time.h>
 #include <signal.h>
 
@@ -23,7 +24,18 @@ void handle_SIGINT(int unused)
 	exit(0);
 }
 
-int main (int argc, char * argv[])
+
+int main(int argc, char * argv[])
+{
+	signal(SIGINT, handle_SIGINT);
+
+	getClosest();
+
+	return 0;
+}
+
+/*
+int main (void)
 {
 	signal(SIGINT, handle_SIGINT);
 
@@ -193,3 +205,4 @@ int main (int argc, char * argv[])
 	arduinoClose(fd);
 	return 0;
 }
+*/

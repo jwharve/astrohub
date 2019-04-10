@@ -57,6 +57,7 @@ unsigned char Sensor::read8(unsigned char reg) {
     if (read(file, &byteBuffer, 1) != 1) {
         /* ERROR HANDLING: i2c transaction failed */
         perror("Failed to read byte from i2c bus");
+	return 0;
     } else {
         return byteBuffer;
     } 
