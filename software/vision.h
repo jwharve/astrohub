@@ -2,7 +2,6 @@
 #define VISION_H
 
 #include <math.h>
-#include "libpixyusb2.h"
 
 #define PI 3.14159265
 
@@ -18,8 +17,9 @@
 #define NUM_COLS (float)315
 #define NUM_ROWS (float)207
 
-#define HEIGHT (float)((10.375-1.25)*2.54)
+#define HEIGHT (float)((10.375-2)*2.54)
 
 void loc(int, int, float *, float *);
+int pixy(float *,float *);
 
 #endif

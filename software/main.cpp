@@ -15,9 +15,15 @@
 
 int main (int argc, char * argv[])
 {
+	float x,y;
+	pixy(&x,&y);
 
-	float x = 0;
-	float y = 0;
+	printf("X_MAIN - %f\n",x);
+	printf("Y_MAIN - %f\n",y);
+
+	return 0;
+//	float x = 0;
+//	float y = 0;
 
 	loc(213,73, &x, &y);
 

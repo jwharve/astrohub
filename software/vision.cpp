@@ -1,5 +1,6 @@
 #include "pins.h"
 #include "vision.h"
+#include "libpixyusb2.h"
 
 void loc(int C, int R, float * x, float * y)
 {
@@ -17,22 +18,11 @@ void loc(int C, int R, float * x, float * y)
 
 	d = (d1+d2)/2;
 
-	printf("d - %f\n",d);
-
-	printf("nc/2 - %f\n",NUM_COLS/2);
-
 	pH = (((float)C)-NUM_COLS/2)/NUM_COLS;
 	pV = ((NUM_ROWS - ((float)R)) - NUM_ROWS/2)/NUM_ROWS;
 
-	printf("pH - %f\n", pH);
-	printf("h - %f\n", h);
-	printf("d - %f\n",d);
-	printf("atan - %f\n",pH*h/d);
-
 	hDeg = degH0 + DEG_H/2 + atan(pH * h / d) * 180.0/PI;
 	vDeg = degV0 + DEG_V/2 + atan(pV * v / d) * 180.0/PI;
-
-	printf("hDeg %f, vDeg %f\n", hDeg, vDeg);
 
 	*y = HEIGHT*tan(vDeg * PI/180.0);
 	*x = sqrt((*y)*(*y) + (HEIGHT * HEIGHT)) * tan(hDeg * PI/180);
@@ -40,13 +30,14 @@ void loc(int C, int R, float * x, float * y)
 	return;
 }
 
-int pixy(void)
+int pixy(float *x, float *y)
 {
 	int  Result;
 	int i;
 	int max_y = 0;
 	int max_loc = -1;
-	float x, y;
+
+	Pixy2 pixy;
 
   // Initialize Pixy2 Connection //
   {
@@ -71,13 +62,16 @@ int pixy(void)
 	{
 		if (pixy.ccc.blocks[i].m_y > max_y)
 		{
-			max_y = pixy.ccc.blocks[i].m_y
+			max_y = pixy.ccc.blocks[i].m_y;
 			max_loc = i;
 		}
 	}
+
+//	printf("m_x - %d\n", pixy.ccc.blocks[max_loc].m_x);
+//	printf("m_y - %d\n", pixy.ccc.blocks[max_loc].m_y);
 	
-	loc(pixy.ccc.blocks[max_loc].m_x, pixy.ccc.blocks[max_loc].m_y, &x, &y)
+	loc(pixy.ccc.blocks[max_loc].m_x, pixy.ccc.blocks[max_loc].m_y, x, y);
 	
-	printf("X - %f\n");
-	printf("Y - %f\n");
+//	printf("X - %f\n", x);
+//	printf("Y - %f\n", y);
 }
