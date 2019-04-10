@@ -8,6 +8,15 @@
 #define NUM_RAMP 279 /* number of accelerations need to get to full speed (1) */
 #define TOP_SPEED 1000
 
+
+#define NR_SPEED 2500
+
+#define RAMP 10
+#define NO_RAMP 11
+
+#define A_THRESH 0.25
+#define NUM_STRAIGHT 25
+
 void driveOn();
 void driveOff();
 void driveSetup();
@@ -17,6 +26,7 @@ void strafeRight(int);
 void strafeLeft(int);
 void turnRight(int);
 void turnLeft(int);
-void move(int);
+void move(int,char);
+void straighten(int fd);
 
 #endif

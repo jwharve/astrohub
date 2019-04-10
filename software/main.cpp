@@ -4,6 +4,7 @@
 #include "colorSensor.h"
 #include "pi2Arduino.h"
 #include <time.h>
+#include <signal.h>
 
 #define RED 0
 #define YELLOW 1
@@ -13,10 +14,36 @@
 // time threshold in seconds
 #define time_thresh 120
 
+
+void handle_SIGINT(int unused)
+{
+	driveOff();
+	exit(0);
+}
+
 int main (int argc, char * argv[])
 {
+	signal(SIGINT, handle_SIGINT);
+
+	int fd = arduinoSetup();
+
+	driveSetup();
+	driveOn();
+//	turnRight(atoi(argv[1]));
+	straighten(fd);
+	driveOff();
+	return 0;
+
+
+
+
+
+
+
 	float x,y;
 	pixy(&x,&y);
+
+
 
 	printf("X_MAIN - %f\n",x);
 	printf("Y_MAIN - %f\n",y);
