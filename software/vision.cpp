@@ -13,18 +13,29 @@ void loc(int C, int R, float * x, float * y)
 	v = PIX_V*PIX_SIZE;
 
 	d1 = (0.5*h)/tan(DEG_H/2 * PI/180.0);
-	d2 = (0.5*h)/tan(DEG_V/2 * PI/180.0);
+	d2 = (0.5*v)/tan(DEG_V/2 * PI/180.0);
 
 	d = (d1+d2)/2;
 
-	pH = (C-NUM_COLS/2)/NUM_COLS;
-	pV = ((NUM_ROWS - R) - NUM_ROWS/2)/NUM_ROWS;
+	printf("d - %f\n",d);
+
+	printf("nc/2 - %f\n",NUM_COLS/2);
+
+	pH = (((float)C)-NUM_COLS/2)/NUM_COLS;
+	pV = ((NUM_ROWS - ((float)R)) - NUM_ROWS/2)/NUM_ROWS;
+
+	printf("pH - %f\n", pH);
+	printf("h - %f\n", h);
+	printf("d - %f\n",d);
+	printf("atan - %f\n",pH*h/d);
 
 	hDeg = degH0 + DEG_H/2 + atan(pH * h / d) * 180.0/PI;
 	vDeg = degV0 + DEG_V/2 + atan(pV * v / d) * 180.0/PI;
 
+	printf("hDeg %f, vDeg %f\n", hDeg, vDeg);
+
 	*y = HEIGHT*tan(vDeg * PI/180.0);
-	*x = sqrt((*y)*(*y) + HEIGHT) * tan(hDeg * PI/180);
+	*x = sqrt((*y)*(*y) + (HEIGHT * HEIGHT)) * tan(hDeg * PI/180);
 
 	return;
 }

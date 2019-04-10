@@ -28,6 +28,7 @@ Editing program to attempt and find the distance from the given pixels.
 
 #include <signal.h>
 #include "libpixyusb2.h"
+#include <time.h>
 
 Pixy2        pixy;
 static bool  run_flag = true;
@@ -187,7 +188,7 @@ int main()
   // Set Pixy2 to color connected components program //
   pixy.changeProg("color_connected_components");
 
-  while(1)
+  //while(1)
   {
 
    // get_blocks();
@@ -197,8 +198,10 @@ int main()
     if (run_flag == false)
     {
       // Exit program loop //
-      break;
+//      break;
     }
+
+//	Sleep(5000);
   }
 
   printf ("PIXY2 Get Blocks Demo Exit\n");
