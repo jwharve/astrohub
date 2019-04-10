@@ -3,12 +3,11 @@ CFLAGS = -Wall -g
 LIBS = -lwiringPi -lm -lusb-1.0
 
 TARGET = main
-SRCS = drive.cpp colorSensor.cpp pi2Arduino.cpp vision.cpp game.cpp
+SRCS = drive.cpp colorSensor.cpp pi2Arduino.cpp vision.cpp game.cpp pickup.cpp
 DEPS = pins.h
 
 OBJS = $(SRCS:.cpp=.o)
 HDRS = $(SRCS:.cpp=.h)
-EXE = $(SRCS:.cpp=)
 
 all: $(TARGET)
 
@@ -25,4 +24,4 @@ vision.o: vision.cpp vision.h $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 clean:
-	rm $(OBJS) main
+	rm $(OBJS) main main.o

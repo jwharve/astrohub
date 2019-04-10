@@ -74,4 +74,5 @@ int pixy(float *x, float *y)
 	
 //	printf("X - %f\n", x);
 //	printf("Y - %f\n", y);
+	return 0;
 }
