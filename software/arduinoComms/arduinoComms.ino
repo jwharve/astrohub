@@ -29,15 +29,15 @@
 #define BR_STEP A2
 #define BL_STEP A3
 #define DIR A4
-#define ENABLE A5
+#define ENABLE A6
 
 // breakbeam pin
-#define BREAK A6
+#define BREAK A5
 
 
 
 
-#define UNBROKEN 0
+#define UNBROKEN 1
 
 #define ELEVATOR_STEPS 1450
 #define DROP_STEPS 225
@@ -172,17 +172,8 @@ void loop()
             delay(500);
           }
           digitalWrite(ENABLE,LOW);
-          if (digitalRead(BREAK) != UNBROKEN)
-          {
-            Serial.println(GOOD);
-          }
-          else
-          {
-            Serial.println(BAD);
-            upSome();
-            digitalWrite(ENABLE,HIGH);
-            break;
-          }
+          Serial.println(GOOD);
+          
           up();
           dropFront();
           down();
@@ -199,17 +190,8 @@ void loop()
             delay(500);
           }
           digitalWrite(ENABLE,LOW);
-          if (digitalRead(BREAK) != UNBROKEN)
-          {
-            Serial.println(GOOD);
-          }
-          else
-          {
-            Serial.println(BAD);
-            upSome();
-            digitalWrite(ENABLE,HIGH);
-            break;
-          }
+          Serial.println(GOOD);
+          
           up();
           dropBack();
           down();
@@ -226,17 +208,8 @@ void loop()
             delay(500);
           }
           digitalWrite(ENABLE,LOW);
-          if (digitalRead(BREAK) != UNBROKEN)
-          {
-            Serial.println(GOOD);
-          }
-          else
-          {
-            Serial.println(BAD);
-            upSome();
-            digitalWrite(ENABLE,HIGH);
-            break;
-          }
+          Serial.println(GOOD);
+          
           up();
           dropLeft();
           down();
@@ -253,17 +226,8 @@ void loop()
             delay(500);
           }
           digitalWrite(ENABLE,LOW);
-          if (digitalRead(BREAK) != UNBROKEN)
-          {
-            Serial.println(GOOD);
-          }
-          else
-          {
-            Serial.println(BAD);
-            upSome();
-            digitalWrite(ENABLE,HIGH);
-            break;
-          }
+          Serial.println(GOOD);
+          
           up();
           dropRight();
           down();
@@ -287,8 +251,8 @@ void up()
     delay(1);
     digitalWrite(BR_STEP,LOW);
     digitalWrite(BL_STEP,LOW);
-    digitalWrite(FR_STEP,HIGH);
-    digitalWrite(FL_STEP,HIGH);
+    digitalWrite(FR_STEP,LOW);
+    digitalWrite(FL_STEP,LOW);
     delay(1);
   }
 }
@@ -306,8 +270,8 @@ void down(void)
     delay(1);
     digitalWrite(BR_STEP,LOW);
     digitalWrite(BL_STEP,LOW);
-    digitalWrite(FR_STEP,HIGH);
-    digitalWrite(FL_STEP,HIGH);
+    digitalWrite(FR_STEP,LOW);
+    digitalWrite(FL_STEP,LOW);
     delay(1);
   }
 }
@@ -325,8 +289,8 @@ void downFull(void)
     delay(1);
     digitalWrite(BR_STEP,LOW);
     digitalWrite(BL_STEP,LOW);
-    digitalWrite(FR_STEP,HIGH);
-    digitalWrite(FL_STEP,HIGH);
+    digitalWrite(FR_STEP,LOW);
+    digitalWrite(FL_STEP,LOW);
     delay(1);
   }  
 }
@@ -444,8 +408,8 @@ void upSome(void)
     delay(1);
     digitalWrite(BR_STEP,LOW);
     digitalWrite(BL_STEP,LOW);
-    digitalWrite(FR_STEP,HIGH);
-    digitalWrite(FL_STEP,HIGH);
+    digitalWrite(FR_STEP,LOW);
+    digitalWrite(FL_STEP,LOW);
     delay(1);
   }
 }
