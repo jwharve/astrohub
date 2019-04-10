@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "pins.h"
+#include "drive.h"
 
 void fromHome(int);
 void doHome(int);
