@@ -19,8 +19,8 @@ void fromHome(int fd)
 void doCorner(int fd)
 {
 	int i = 0;
-	double int homing_x = 0;
-	double int homing_y = 0;
+	float homing_x = 0;
+	float homing_y = 0;
 	int x_steps = 0;
 	int y_steps = 0;
 
@@ -29,6 +29,9 @@ void doCorner(int fd)
 
 	for (i = 0; i < 3; i++)
 	{
+		// get starting distance
+		homing_x = distance1(fd);
+		homing_y = distance3(fd);
 
 		// check if pixy detects objects
 		// if no object was detected, move on
@@ -42,8 +45,9 @@ void doCorner(int fd)
 			getClosest(&x_steps, &y_steps);
 			collection(fd,signature);
 			delay(3000);
-	
+
 			// return to reference position
+			driveOn();
 			if (x_steps > 0)
 			{
 				strafeLeft(homing_x);
@@ -63,6 +67,7 @@ void doCorner(int fd)
 			{
 				driveForward(-1*homing_y);
 			}
+			driveOff();
 		}
 	}
 
