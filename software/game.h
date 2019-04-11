@@ -3,6 +3,8 @@
 
 #include "pins.h"
 #include "drive.h"
+#include "vision.h"
+#include "pickup.h"
 
 void fromHome(int);
 void doHome(int);

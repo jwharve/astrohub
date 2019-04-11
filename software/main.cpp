@@ -4,6 +4,7 @@
 #include "colorSensor.h"
 #include "pi2Arduino.h"
 #include "pickup.h"
+#include "game.h"
 #include <time.h>
 #include <signal.h>
 
@@ -31,7 +32,7 @@ int main(int argc, char * argv[])
 	driveSetup();
 
 	int fd = arduinoSetup();
-
+	
 	float x,y;
 	int signature;
 

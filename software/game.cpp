@@ -9,32 +9,34 @@ void fromHome(int fd)
 {
 	// starting at home position
 
-	// strafe left until at far side of quadrant
+	// strafe left until edge of zone 2
 	strafeLeft(2000);
+	straighten(fd);
 
 	// after this doHome will start the process of gridding
 }
 
 void doHome(int fd)
 {
+	float x,y;
+	int signature = -1;
+
 	// check if pixy detects objects
+	// if no object was detected, move on
+	if (pixy(&signature, &x, &y) < 0)
+	{
 
-		// if so pick closest object
+	}
+	else
+	{
+		// locate closest object
+		getClosest();
+		driveOff();
+		collection(fd,signature);
+		delay(3000);
 
-		// calculate distance
-
-		// check distance sensors
-
-		// determine if going driving to that location is a good idea
-		// i.e. not in a zone that will hit a spacetel or at a location we cant pick up
-
-			// if so, look for other objects
-			// if no other objects continue gridding that column
-		// for food objects
-		// drive to location using distance and start collection process
-		// once done, return to inital grid position to continue
-
-	// if no objects are detected on that column, reset backwards and strafe right to next column
+		// use distance sensors to return to reference position
+	}
 
 	// stop when done
 }
