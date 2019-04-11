@@ -37,7 +37,10 @@ void doCorner(int fd)
 		// if no object was detected, move on
 		if (pixy(&signature, &x, &y) < 0)
 		{
-			;
+			driveOn();
+			// drive to next position
+			driveForward(2000);
+			driveOff();
 		}
 		else
 		{
