@@ -16,26 +16,34 @@ void fromHome(int fd)
 	// after this doHome will start the process of gridding
 }
 
-void doHome(int fd)
+void doCorner(int fd)
 {
+	int i = 0;
+	int homing_x = 0;
+	int homing_y = 0;
+
 	float x,y;
 	int signature = -1;
 
-	// check if pixy detects objects
-	// if no object was detected, move on
-	if (pixy(&signature, &x, &y) < 0)
+	for (i = 0; i < 3; i++)
 	{
 
-	}
-	else
-	{
-		// locate closest object
-		getClosest();
-		driveOff();
-		collection(fd,signature);
-		delay(3000);
-
-		// use distance sensors to return to reference position
+		// check if pixy detects objects
+		// if no object was detected, move on
+		if (pixy(&signature, &x, &y) < 0)
+		{
+			;
+		}
+		else
+		{
+			// locate closest object
+			getClosest();
+			driveOff();
+			collection(fd,signature);
+			delay(3000);
+	
+			// use distance sensors to return to reference position
+		}
 	}
 
 	// stop when done
@@ -55,13 +63,6 @@ void moveCorner(int fd)
 	// drive forward until on line conneting next quadrant
 
 	// strafe left to get to the side
-}
-
-void doCorner(int fd)
-{
-	// grid quandrant
-
-	// repeat similarly to doHome but with different positioning in mind
 }
 
 void toBase(int fd)

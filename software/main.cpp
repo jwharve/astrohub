@@ -154,7 +154,7 @@ int main (void)
 			// do corner at starting orientation
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> DOING HOME CORNER...\n", match_time);
-			doHome(fd);
+			doCorner(fd);
 
 			// move to next corner
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
