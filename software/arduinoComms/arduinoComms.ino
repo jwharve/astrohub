@@ -261,7 +261,7 @@ void down(void)
 {
   int i;
   digitalWrite(DIR,LOW);
-  for (i = 0; i < 3*ELEVATOR_STEPS/4; i++)
+  for (i = 0; i < 9*ELEVATOR_STEPS/10; i++)
   {
     digitalWrite(BR_STEP,HIGH);
     digitalWrite(BL_STEP,HIGH);
@@ -280,7 +280,7 @@ void downFull(void)
 {
   int i;
   digitalWrite(DIR,LOW);
-  for (i = 0; i < (ELEVATOR_STEPS - 3*ELEVATOR_STEPS/4); i++)
+  for (i = 0; i < (ELEVATOR_STEPS - 9*ELEVATOR_STEPS/10); i++)
   {
     digitalWrite(BR_STEP,HIGH);
     digitalWrite(BL_STEP,HIGH);
@@ -308,6 +308,7 @@ void dropFront(void)
     digitalWrite(BL_STEP,LOW);
     delay(1);
   }
+  delay(500);
   digitalWrite(DIR,LOW);
   for (i = 0; i < DROP_STEPS; i++)
   {
@@ -333,6 +334,7 @@ void dropBack(void)
     digitalWrite(FL_STEP,LOW);
     delay(1);
   }
+  delay(500);
   digitalWrite(DIR,LOW);
   for (i = 0; i < DROP_STEPS; i++)
   {
@@ -358,6 +360,7 @@ void dropLeft(void)
     digitalWrite(FR_STEP,LOW);
     delay(1);
   }
+  delay(500);
   digitalWrite(DIR,LOW);
   for (i = 0; i < DROP_STEPS; i++)
   {
@@ -383,6 +386,7 @@ void dropRight(void)
     digitalWrite(BL_STEP,LOW);
     delay(1);
   }
+  delay(500);
   digitalWrite(DIR,LOW);
   for (i = 0; i < DROP_STEPS; i++)
   {
@@ -399,7 +403,7 @@ void upSome(void)
 {
   int i;
   digitalWrite(DIR,HIGH);
-  for (i = 0; i < (ELEVATOR_STEPS - 3*ELEVATOR_STEPS/4); i++)
+  for (i = 0; i < (ELEVATOR_STEPS - 9*ELEVATOR_STEPS/10); i++)
   {
     digitalWrite(BR_STEP,HIGH);
     digitalWrite(BL_STEP,HIGH);

@@ -3,6 +3,17 @@
 #include <iostream>
 #include <cstdio>
 
+void proxInit(void)
+{
+	pinMode(BBPROX_PIN,INPUT);
+}
+
+char backboardProx(void)
+{
+	return digitalRead(BBPROX_PIN);
+}
+
+
 Sensor::Sensor(const char* i2c_dev):i2c_dev(i2c_dev){
     Sensor::init();
     Sensor::setConfig();

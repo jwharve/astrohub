@@ -7,6 +7,9 @@
 
 #include "ISL_29125.h"
 
+#define BBPROX_PIN 2
+#define NEAR 0
+
 class Sensor
 {
 public:
@@ -27,3 +30,6 @@ private:
     void write8(unsigned char reg, unsigned char data);
     unsigned char read8(unsigned char);  
 };
+
+void proxInit(void);
+char backboardProx(void);
