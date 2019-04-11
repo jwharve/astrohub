@@ -76,10 +76,12 @@ int getClosest(int *x_steps, int *y_steps)
 	strafeRight((int)(LR_TO_STEP*2));
 	driveForward(20);
 	
-	*x_steps += (int)(FB_TO_STEP*20);
-
-
 	driveOff();
+
+	*y_steps += (int)(FB_TO_STEP*20);
+	*x_steps -= (int)(LR_TO_STEP*15);
+	*x_steps += (int)(LR_TO_STEP*2);
+	*y_steps += 20;
 
 	return 0;
 }
