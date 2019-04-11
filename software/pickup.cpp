@@ -67,6 +67,7 @@ int getClosest(void)
 	driveForward((int)(FB_TO_STEP*20));
 	strafeLeft((int)(LR_TO_STEP*15));
 	strafeRight((int)(LR_TO_STEP*2));
+	driveForward(20);
 	driveOff();
 
 	return 0;
