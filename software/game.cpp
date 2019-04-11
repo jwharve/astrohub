@@ -19,10 +19,12 @@ void fromHome(int fd)
 void doCorner(int fd)
 {
 	int i = 0;
-	int homing_x = 0;
-	int homing_y = 0;
+	double int homing_x = 0;
+	double int homing_y = 0;
+	int x_steps = 0;
+	int y_steps = 0;
 
-	float x,y;
+	float x, y;
 	int signature = -1;
 
 	for (i = 0; i < 3; i++)
@@ -37,27 +39,27 @@ void doCorner(int fd)
 		else
 		{
 			// locate closest object
-			getClosest(&homing_x,&homing_y);
+			getClosest(&x_steps, &y_steps);
 			collection(fd,signature);
 			delay(3000);
 	
 			// return to reference position
-			if (homing_x > 0)
+			if (x_steps > 0)
 			{
 				strafeLeft(homing_x);
 			}
-			else if (homing_x < 0)
+			else if (x_steps < 0)
 			{
 				strafeRight(-1*homing_x);
 			}
 			
 			straighten();
 
-			if (homing_y > 0)
+			if (y_steps > 0)
 			{
 				driveBackward(homing_y);
 			}
-			else if (homing_y < 0)
+			else if (y_steps < 0)
 			{
 				driveForward(-1*homing_y);
 			}
