@@ -28,10 +28,31 @@ void handle_SIGINT(int unused)
 int main(int argc, char * argv[])
 {
 	signal(SIGINT, handle_SIGINT);
+	driveSetup();
+
+	int fd = arduinoSetup();
+
+	float x,y;
+	int signature;
+
+	pixy(&signature,&x,&y);
+
+	printf("#%d\n", signature);
+	printf("x - %f\n",x);
+	printf("y - %f\n",y);
 
 	getClosest();
 
+	driveOff();
+	collection(fd,2);
+
+	dump2(fd);
+
+	arduinoClose(fd);
+
 	return 0;
+
+
 }
 
 /*

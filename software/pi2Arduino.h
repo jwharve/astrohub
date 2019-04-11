@@ -24,6 +24,9 @@
 #define GOOD 'c'
 #define BAD 'n'
 
+void dump1(int);
+void dump2(int);
+void dump3(int);
 void collection(int, int);
 float distance1(int);
 float distance2(int);

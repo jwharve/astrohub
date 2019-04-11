@@ -30,7 +30,7 @@ void loc(int C, int R, float * x, float * y)
 	return;
 }
 
-int pixy(float *x, float *y)
+int pixy(int *signature, float *x, float *y)
 {
 	int  Result;
 	int i;
@@ -66,6 +66,8 @@ int pixy(float *x, float *y)
 			max_loc = i;
 		}
 	}
+
+	*signature = pixy.ccc.blocks[max_loc].m_signature;
 
 //	printf("m_x - %d\n", pixy.ccc.blocks[max_loc].m_x);
 //	printf("m_y - %d\n", pixy.ccc.blocks[max_loc].m_y);
