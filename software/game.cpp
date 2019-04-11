@@ -37,12 +37,30 @@ void doCorner(int fd)
 		else
 		{
 			// locate closest object
-			getClosest();
-			driveOff();
+			getClosest(&homing_x,&homing_y);
 			collection(fd,signature);
 			delay(3000);
 	
-			// use distance sensors to return to reference position
+			// return to reference position
+			if (homing_x > 0)
+			{
+				strafeLeft(homing_x);
+			}
+			else if (homing_x < 0)
+			{
+				strafeRight(-1*homing_x);
+			}
+			
+			straighten();
+
+			if (homing_y > 0)
+			{
+				driveBackward(homing_y);
+			}
+			else if (homing_y < 0)
+			{
+				driveForward(-1*homing_y);
+			}
 		}
 	}
 
