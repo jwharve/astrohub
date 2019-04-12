@@ -122,3 +122,14 @@ char arduinoReadChar(int fd)
 
 	return serialGetchar(fd);
 }
+
+
+void elUp(int)
+{
+	arduinoWriteChar(fd,RAISE);
+}
+
+void elDown(int)
+{
+	arduinoWriteChar(fd,LOWER);
+}

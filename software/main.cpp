@@ -22,6 +22,7 @@ void handle_SIGINT(int unused)
 {
 	driveOff();
 	arduinoClose(fd);
+	elUp();
 	exit(0);
 }
 
@@ -78,6 +79,7 @@ int main (void)
 	printf("<%3ld> BEGINNING SETUP...\n", -1);
 	driveSetup();
 	fd = arduinoSetup();
+	elDown();
 	printf("<%3lf> SETUP FINISHED\n\n", -1);
 
 	// busy wait for start button
@@ -222,6 +224,7 @@ int main (void)
 	// dumpBase(base+i);
 */
 	printf("<%3ld> DONE.\n", match_time);
+	elUp();
 	arduinoClose(fd);
 	return 0;
 }
