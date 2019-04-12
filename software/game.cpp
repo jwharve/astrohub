@@ -98,7 +98,7 @@ void doCorner(int fd)
 	
 				// check error and drive to fix
 				x_steps = (LR_TO_STEPS)*(distance1(fd) - homing_x);
-				y_steps = (FR_TO_STEPS)*(distance3(fd) - homing_y);
+				y_steps = (FB_TO_STEPS)*(distance3(fd) - homing_y);
 			}
 		}
 	}
@@ -106,14 +106,44 @@ void doCorner(int fd)
 
 void moveCorner(int fd)
 {
+	double x_step = 0;
+	double y_step = 0;
+
 	// center robot in quandrant
+	// find steps away from center
+	x_step = (LR_TO_STEPS*(65 - distance1(fd));
+	y_step = (FB_TO_STEPS*(65 - distance3(fd));
+
+	if (x_step > 0)
+	{
+		strafeRight(x_step);
+	}
+	else if (x_step < 0)
+	{
+		strafeLeft(-1*x_step);
+	}
+
+	straighten();
+
+	if (y_step > 0)
+	{
+		driveForward(y_step);
+	}
+	else if (y_step < 0)
+	{
+		driveBackground(-1*y_step);
+	}
 
 	// drive forward until on line conneting next quadrant
+	driveForward(130*FB_TO_STEPS);
 
 	// turn left 90 degrees
+	turnLeft();
 
 	// drive backwards to wall
+	driveBackground(190*FB_TO_STEPS);
 
+	// strafe keft to doCorner() starting position
 }
 
 void toBase(int fd)
