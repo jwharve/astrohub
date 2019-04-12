@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
 	printf("x - %f\n",x);
 	printf("y - %f\n",y);
 
-	getClosest();
+//	getClosest();
 
 	driveOff();
 	collection(fd,2);
@@ -58,6 +58,7 @@ int main(int argc, char * argv[])
 int main (void)
 {
 	signal(SIGINT, handle_SIGINT);
+	proxInit();
 
 	int currentColor;
 
@@ -138,6 +139,7 @@ int main (void)
 	match_time = get_time.tv_sec - start_time;
 
 	printf("<%3ld> STARTING NAVIGATION\n", match_time);
+	i = 0;
 //	for (i = 0; (i < 4) && (match_time < TIME_THRESH); i++)
 //	{
 		currentColor = (i + base) % 4;
@@ -225,4 +227,3 @@ int main (void)
 	arduinoClose(fd);
 	return 0;
 }
-

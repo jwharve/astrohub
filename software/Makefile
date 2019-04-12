@@ -3,7 +3,7 @@ CFLAGS = -Wall -g
 LIBS = -lwiringPi -lm -lusb-1.0
 
 TARGET = main
-SRCS = drive.cpp colorSensor.cpp pi2Arduino.cpp vision.cpp game.cpp pickup.cpp
+SRCS = drive.cpp colorSensor.cpp pi2Arduino.cpp vision.cpp pickup.cpp game.cpp
 DEPS = pins.h
 
 OBJS = $(SRCS:.cpp=.o)

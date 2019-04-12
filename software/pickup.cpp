@@ -55,7 +55,7 @@ int getClosest(int *x_steps, int *y_steps)
 	else
 	{
 		strafeRight((int)(LR_TO_STEP*fabsf(x_delta)));
-		*x_steps += ((int)(LR_TO_STEP*fabsfx_delta));
+		*x_steps += ((int)(LR_TO_STEP*fabsf(x_delta)));
 	}
 
 	if (y_delta < 0)
@@ -66,19 +66,23 @@ int getClosest(int *x_steps, int *y_steps)
 	else
 	{
 		driveForward((int)(FB_TO_STEP*fabsf(y_delta)));
-		*y_steps += ((int)(FB_TO_SETP*fabsf(y_delta)));
+		*y_steps += ((int)(FB_TO_STEP*fabsf(y_delta)));
 	}
 
 	delay(2000);
 
-	driveForward((int)(FB_TO_STEP*20));
+	// drive until proximity sensor is tripped
+	*y_steps += (int)(FB_TO_STEPS*proximity());
+
+	// drive backwards slightly
+	driveBackward((int)(LR_TO_STEP*20);
 	strafeLeft((int)(LR_TO_STEP*15));
 	strafeRight((int)(LR_TO_STEP*2));
 	driveForward(20);
 	
 	driveOff();
 
-	*y_steps += (int)(FB_TO_STEP*20);
+	*y_steps -= (int)(FB_TO_STEP*20);
 	*x_steps -= (int)(LR_TO_STEP*15);
 	*x_steps += (int)(LR_TO_STEP*2);
 	*y_steps += 20;

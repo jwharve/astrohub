@@ -31,5 +31,6 @@ void turnRight(int);
 void turnLeft(int);
 void move(int,char);
 void straighten(int fd);
+int proximity(void);
 
 #endif

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "drive.h"
 
 #define RED 0
 #define YELLOW 1
@@ -10,9 +11,17 @@ void fromHome(int fd)
 	// starting at home position
 
 	// strafe left until edge of zone 2
-	strafeLeft((int)((RL_TO_STEPS)*80));
+	driveOn();
+	strafeLeft((int)(LR_TO_STEP*80));
 	straighten(fd);
 
+	float a = distance3(fd);
+	if ( a > 5)
+	{
+		driveBackward((int)((a-5)*FB_TO_STEP));
+	}
+
+	driveOff();
 	// after this doHome will start the process of gridding
 }
 
@@ -46,21 +55,21 @@ void doCorner(int fd)
 			{
 				driveOn();
 				// drive to next position
-				driveForward(2000);
+				driveForward((int)(FB_TO_STEP*30));
 				driveOff();
 			
 				// update new starting distance
-				homing_x = distance(fd);
-				homing_y = distance(fd);
+				homing_x = distance1(fd);
+				homing_y = distance3(fd);
 		
 				// don't find an object again
 				if (pixy(&signature, &x, &y) < 0)
 				{
-					if (i != 2)
+					if (i != 1)
 					{
 						// go to next column
 						driveOn();
-						driveBackward(2000);
+						driveBackward((int)(FB_TO_STEP*30));
 						strafeRight(3000);
 					}
 					END_OF_COL = 1;
@@ -84,7 +93,7 @@ void doCorner(int fd)
 					strafeRight(-1*homing_x);
 				}
 				
-				straighten();
+				straighten(fd);
 
 				if (y_steps > 0)
 				{
@@ -97,8 +106,8 @@ void doCorner(int fd)
 				driveOff();
 	
 				// check error and drive to fix
-				x_steps = (LR_TO_STEPS)*(distance1(fd) - homing_x);
-				y_steps = (FB_TO_STEPS)*(distance3(fd) - homing_y);
+				x_steps = (LR_TO_STEP)*(distance1(fd) - homing_x);
+				y_steps = (FB_TO_STEP)*(distance3(fd) - homing_y);
 			}
 		}
 	}
@@ -111,8 +120,8 @@ void moveCorner(int fd)
 
 	// center robot in quandrant
 	// find steps away from center
-	x_step = (LR_TO_STEPS*(65 - distance1(fd));
-	y_step = (FB_TO_STEPS*(65 - distance3(fd));
+	x_step = (LR_TO_STEP*(65 - distance1(fd)));
+	y_step = (FB_TO_STEP*(65 - distance3(fd)));
 
 	if (x_step > 0)
 	{
@@ -123,7 +132,7 @@ void moveCorner(int fd)
 		strafeLeft(-1*x_step);
 	}
 
-	straighten();
+	straighten(fd);
 
 	if (y_step > 0)
 	{
@@ -131,17 +140,17 @@ void moveCorner(int fd)
 	}
 	else if (y_step < 0)
 	{
-		driveBackground(-1*y_step);
+		driveBackward(-1*y_step);
 	}
 
 	// drive forward until on line conneting next quadrant
-	driveForward(130*FB_TO_STEPS);
+	driveForward(130*FB_TO_STEP);
 
 	// turn left 90 degrees
-	turnLeft();
+	turnLeft(NINETY);
 
 	// drive backwards to wall
-	driveBackground(190*FB_TO_STEPS);
+	driveBackward(190*FB_TO_STEP);
 
 	// strafe keft to doCorner() starting position
 }

@@ -15,7 +15,6 @@ void driveSetup()
 {
 	wiringPiSetup();
 
-
 	pinMode(ENABLE,OUTPUT);
 	driveOff();
 
@@ -205,4 +204,21 @@ void straighten(int fd)
 				return;
 		}
 	}
+}
+
+int proximity(void)
+{
+	int i = 0;
+
+	while (backboardProx() != NEAR)
+	{
+		digitalWrite(STEP, HIGH);
+		delayMicroseconds(NR_SPEED);
+		digitalWrite(STEP, LOW);
+		delayMicroseconds(NR_SPEED);
+
+		i++;
+	}
+
+	return i;
 }
