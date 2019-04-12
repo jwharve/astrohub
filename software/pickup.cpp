@@ -87,5 +87,5 @@ int getClosest(int *x_steps, int *y_steps)
 	*x_steps += (int)(LR_TO_STEP*2);
 	*y_steps += 20;
 
-	return 0;
+	return signature;
 }

@@ -6,15 +6,18 @@
 #define BLUE 2
 #define GREEN 3
 
+#define MIDDLE 55
+
 void fromHome(int fd)
 {
 	// starting at home position
 
 	// strafe left until edge of zone 2
 	driveOn();
-	strafeLeft((int)(LR_TO_STEP*80));
+	strafeLeft((int)(LR_TO_STEP*MIDDLE));
 	straighten(fd);
 
+	// drive to wall
 	float a = distance3(fd);
 	if ( a > 5)
 	{
@@ -22,144 +25,97 @@ void fromHome(int fd)
 	}
 
 	driveOff();
-	// after this doHome will start the process of gridding
 }
 
 void doCorner(int fd)
 {
-	int END_OF_COL = 0;
-
-	int i = 0;
-	float homing_x = 0;
-	float homing_y = 0;
 	int x_steps = 0;
 	int y_steps = 0;
+
+	int x_current = 0;
+	int y_current = 0;
+
+	int i = 0;
+	int pixyReturn = 0;
 
 	float x, y;
 	int signature = -1;
 
-	float currX, currY;
+	float dist = 0;
+	dist = distance3(fd);
 
-	// FOR EACH COLUMN
-	for (i = 0; i < 2; i++)
+	while (dist > 190)
 	{
-		END_OF_COL = 0;
+		// get current location
+		x_current = distance1(fd);
+		y_current = distance3(fd);
 
-printf("...starting column %d\n",i);
+		// get location of first object
+		pixyReturn = pixy(&signature, &x, &y);
 
-		// get starting distance
-		homing_x = distance1(fd);
-		homing_y = distance3(fd);
-
-		while (!END_OF_COL)
-		{
-			// check if pixy detects objects
-			// if no object was detected, move on
-			
-			if (pixy(&signature, &x, &y) < 0)
+		i = 1;
+		while (pixyReturn > 0)
+		{		
+			if ((dead_zone(x,y)))
 			{
-printf("missed first\n");
-				driveOn();
-				// drive to next position
-printf("drove forward\n");
-				driveForward((int)(FB_TO_STEP*40));
-				driveOff();
-
-				// update new starting distance
-
-				// don't find an object again
-				if (pixy(&signature, &x, &y) < 0)
-				{
-					if (i != 1)
-					{
-						// go to next column
-						driveOn();
-						driveBackward((int)(FB_TO_STEP*30));
-						strafeRight((int)(LR_TO_STEP*30));
-					}
-					END_OF_COL = 1;
-				}
-				else
-				{
-					currX = distance1(fd);
-					currY = distance3(fd);
-					if ((currX + x) < 120 && (currY + y) < 120)
-					{
-						if (getClosest(&x_steps, &y_steps) == 0)
-						{
-							collection(fd,signature);
-						}
-					}
-
-					go(homing_x,homing_y+5,fd);
-
-				}
-
+				pixyReturn = pixyIgnore(&signature, &x, &y, i);
+				i++;
 			}
 			else
 			{
-				// locate closest object
-printf("got first\n");
-				currX = distance1(fd);
-				currY = distance3(fd);
-				if ((currX + x) < 120 && (currY + y) < 120)
-				{
-					if (getClosest(&x_steps, &y_steps) == 0)
-					{
-						collection(fd,signature);
-					}
-				}
-
-				delay(3000);
-
-				go(homing_x,homing_y+5,fd);
-
-				// return to reference position
+				break;
 			}
 		}
+
+		if (!(dead_zone(x,y)))
+		{
+			signature = getClosest(&x_steps, &y_steps, i-1);
+			collection(fd, signature);
+
+			// wiat until collection is good
+			arduinoGetChar();
+
+			// center robot
+			center(fd);	
+
+			driveOn();
+			driveBackward((int)(FB_TO_STEP*10));
+			driveOff();
+		}
+		else
+		{
+			driveOn();
+			driveForward((int)(FB_TO_STEP*40));
+			driveOff();
+		}
+		dist = distance3(fd);
 	}
 }
 
 void moveCorner(int fd)
 {
-	double x_step = 0;
-	double y_step = 0;
+	float a = distance3(fd);
 
-	// center robot in quandrant
-	// find steps away from center
-	x_step = (LR_TO_STEP*(65 - distance1(fd)));
-	y_step = (FB_TO_STEP*(65 - distance3(fd)));
-
-	if (x_step > 0)
+	if (a < 190)
 	{
-		strafeRight(x_step);
-	}
-	else if (x_step < 0)
-	{
-		strafeLeft(-1*x_step);
+		driveOn();
+		driveForward((int)(FB_TO_STEP*(190-a)));
+		driveOff();
 	}
 
-	straighten(fd);
-
-	if (y_step > 0)
-	{
-		driveForward(y_step);
-	}
-	else if (y_step < 0)
-	{
-		driveBackward(-1*y_step);
-	}
-
-	// drive forward until on line conneting next quadrant
-	driveForward(130*FB_TO_STEP);
-
+	driveOn();
 	// turn left 90 degrees
 	turnLeft(NINETY);
 
-	// drive backwards to wall
-	driveBackward(190*FB_TO_STEP);
+	// center robot
+	center(fd);
 
-	// strafe keft to doCorner() starting position
+	a = distance3(fd);
+	// drive backward to wall
+	if (a > 5)
+	{
+		driveBackward((int)((a-5)*FB_TO_STEP));
+	}
 }
 
 void toBase(int fd)
