@@ -41,7 +41,6 @@ int pixy(int *signature, float *x, float *y)
 
   // Initialize Pixy2 Connection //
   {
-	printf("Connecting...\n");
     Result = pixy.init();
 
     if (Result < 0)
@@ -51,12 +50,16 @@ int pixy(int *signature, float *x, float *y)
       return -1;
     }
 
-    printf ("Success\n");
   }
   
   
   pixy.ccc.getBlocks();
- 
+
+	if (pixy.ccc.numBlocks <= 0)
+	{
+		return -1;
+	}
+
 
 	for (i = 0; i < pixy.ccc.numBlocks; i++)
 	{
@@ -73,8 +76,12 @@ int pixy(int *signature, float *x, float *y)
 //	printf("m_y - %d\n", pixy.ccc.blocks[max_loc].m_y);
 	
 	loc(pixy.ccc.blocks[max_loc].m_x, pixy.ccc.blocks[max_loc].m_y, x, y);
-	
 //	printf("X - %f\n", x);
 //	printf("Y - %f\n", y);
+	
+
+	if (*y > 60)
+		return -2;
+
 	return 0;
 }

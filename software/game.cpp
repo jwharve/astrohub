@@ -38,30 +38,35 @@ void doCorner(int fd)
 	float x, y;
 	int signature = -1;
 
+	float currX, currY;
+
+	// FOR EACH COLUMN
 	for (i = 0; i < 2; i++)
 	{
 		END_OF_COL = 0;
 
+printf("...starting column %d\n",i);
+
+		// get starting distance
+		homing_x = distance1(fd);
+		homing_y = distance3(fd);
+
 		while (!END_OF_COL)
 		{
-
-			// get starting distance
-			homing_x = distance1(fd);
-			homing_y = distance3(fd);
-	
 			// check if pixy detects objects
 			// if no object was detected, move on
+			
 			if (pixy(&signature, &x, &y) < 0)
 			{
+printf("missed first\n");
 				driveOn();
 				// drive to next position
-				driveForward((int)(FB_TO_STEP*30));
+printf("drove forward\n");
+				driveForward((int)(FB_TO_STEP*40));
 				driveOff();
-			
+
 				// update new starting distance
-				homing_x = distance1(fd);
-				homing_y = distance3(fd);
-		
+
 				// don't find an object again
 				if (pixy(&signature, &x, &y) < 0)
 				{
@@ -70,44 +75,46 @@ void doCorner(int fd)
 						// go to next column
 						driveOn();
 						driveBackward((int)(FB_TO_STEP*30));
-						strafeRight(3000);
+						strafeRight((int)(LR_TO_STEP*30));
 					}
 					END_OF_COL = 1;
 				}
+				else
+				{
+					currX = distance1(fd);
+					currY = distance3(fd);
+					if ((currX + x) < 120 && (currY + y) < 120)
+					{
+						if (getClosest(&x_steps, &y_steps) == 0)
+						{
+							collection(fd,signature);
+						}
+					}
+
+					go(homing_x,homing_y+5,fd);
+
+				}
+
 			}
 			else
 			{
 				// locate closest object
-				getClosest(&x_steps, &y_steps);
-				collection(fd,signature);
-				delay(3000);
-	
-				// return to reference position
-				driveOn();
-				if (x_steps > 0)
+printf("got first\n");
+				currX = distance1(fd);
+				currY = distance3(fd);
+				if ((currX + x) < 120 && (currY + y) < 120)
 				{
-					strafeLeft(homing_x);
+					if (getClosest(&x_steps, &y_steps) == 0)
+					{
+						collection(fd,signature);
+					}
 				}
-				else if (x_steps < 0)
-				{
-					strafeRight(-1*homing_x);
-				}
-				
-				straighten(fd);
 
-				if (y_steps > 0)
-				{
-					driveBackward(homing_y);
-				}
-				else if (y_steps < 0)
-				{
-					driveForward(-1*homing_y);
-				}
-				driveOff();
-	
-				// check error and drive to fix
-				x_steps = (LR_TO_STEP)*(distance1(fd) - homing_x);
-				y_steps = (FB_TO_STEP)*(distance3(fd) - homing_y);
+				delay(3000);
+
+				go(homing_x,homing_y+5,fd);
+
+				// return to reference position
 			}
 		}
 	}
@@ -174,15 +181,15 @@ void go(float x, float y, int fd)
 {
 	float currX, currY;
 	float dX, dY;
-	
+
 	driveOn();
 	straighten(fd);
 	currX = distance1(fd);
 	currY = distance3(fd);
-	
+
 	dX = currX - x;
 	dY = currY - y;
-	
+
 	if (dX < 0)
 	{
 		strafeLeft((int)(-dX*LR_TO_STEP));
@@ -191,7 +198,7 @@ void go(float x, float y, int fd)
 	{
 		strafeRight((int)(dX*LR_TO_STEP));
 	}
-	
+
 	if (dY < 0)
 	{
 		driveForward((int)(-dY*LR_TO_STEP));
@@ -200,6 +207,4 @@ void go(float x, float y, int fd)
 	{
 		driveBackward((int)(dY*LR_TO_STEP));
 	}
-	
-	
 }
