@@ -20,6 +20,8 @@
 #define CB 'i'
 #define CL 'j'
 #define CR 'k'
+#define RAISE 'l'
+#define LOWER 'm'
 
 #define GOOD 'c'
 #define BAD 'n'
@@ -38,5 +40,8 @@ void arduinoWriteString(int, char *);
 void arduinoWriteChar(int, char);
 char *arduinoReadString(int);
 char arduinoReadChar(int);
+
+void elUp(int);
+void elDown(int);
 
 #endif
