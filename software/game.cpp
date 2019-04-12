@@ -9,57 +9,141 @@ void fromHome(int fd)
 {
 	// starting at home position
 
-	// strafe left until at far side of quadrant
-	strafeLeft(2000);
+	// strafe left until edge of zone 2
+	strafeLeft((int)((RL_TO_STEPS)*80));
+	straighten(fd);
 
 	// after this doHome will start the process of gridding
 }
 
-void doHome(int fd)
+void doCorner(int fd)
 {
-	// check if pixy detects objects
+	int END_OF_COL = 0;
 
-		// if so pick closest object
+	int i = 0;
+	float homing_x = 0;
+	float homing_y = 0;
+	int x_steps = 0;
+	int y_steps = 0;
 
-		// calculate distance
+	float x, y;
+	int signature = -1;
 
-		// check distance sensors
+	for (i = 0; i < 2; i++)
+	{
+		END_OF_COL = 0;
 
-		// determine if going driving to that location is a good idea
-		// i.e. not in a zone that will hit a spacetel or at a location we cant pick up
+		while (!END_OF_COL)
+		{
 
-			// if so, look for other objects
-			// if no other objects continue gridding that column
-		// for food objects
-		// drive to location using distance and start collection process
-		// once done, return to inital grid position to continue
+			// get starting distance
+			homing_x = distance1(fd);
+			homing_y = distance3(fd);
+	
+			// check if pixy detects objects
+			// if no object was detected, move on
+			if (pixy(&signature, &x, &y) < 0)
+			{
+				driveOn();
+				// drive to next position
+				driveForward(2000);
+				driveOff();
+			
+				// update new starting distance
+				homing_x = distance(fd);
+				homing_y = distance(fd);
+		
+				// don't find an object again
+				if (pixy(&signature, &x, &y) < 0)
+				{
+					if (i != 2)
+					{
+						// go to next column
+						driveOn();
+						driveBackward(2000);
+						strafeRight(3000);
+					}
+					END_OF_COL = 1;
+				}
+			}
+			else
+			{
+				// locate closest object
+				getClosest(&x_steps, &y_steps);
+				collection(fd,signature);
+				delay(3000);
+	
+				// return to reference position
+				driveOn();
+				if (x_steps > 0)
+				{
+					strafeLeft(homing_x);
+				}
+				else if (x_steps < 0)
+				{
+					strafeRight(-1*homing_x);
+				}
+				
+				straighten();
 
-	// if no objects are detected on that column, reset backwards and strafe right to next column
-
-	// stop when done
-}
-
-void moveHome(int fd)
-{
-	// same as move corner but no turn
+				if (y_steps > 0)
+				{
+					driveBackward(homing_y);
+				}
+				else if (y_steps < 0)
+				{
+					driveForward(-1*homing_y);
+				}
+				driveOff();
+	
+				// check error and drive to fix
+				x_steps = (LR_TO_STEPS)*(distance1(fd) - homing_x);
+				y_steps = (FB_TO_STEPS)*(distance3(fd) - homing_y);
+			}
+		}
+	}
 }
 
 void moveCorner(int fd)
 {
-	// turn left 90 degrees
+	double x_step = 0;
+	double y_step = 0;
 
-	// strafe to center robot in quandrant
+	// center robot in quandrant
+	// find steps away from center
+	x_step = (LR_TO_STEPS*(65 - distance1(fd));
+	y_step = (FB_TO_STEPS*(65 - distance3(fd));
+
+	if (x_step > 0)
+	{
+		strafeRight(x_step);
+	}
+	else if (x_step < 0)
+	{
+		strafeLeft(-1*x_step);
+	}
+
+	straighten();
+
+	if (y_step > 0)
+	{
+		driveForward(y_step);
+	}
+	else if (y_step < 0)
+	{
+		driveBackground(-1*y_step);
+	}
 
 	// drive forward until on line conneting next quadrant
+	driveForward(130*FB_TO_STEPS);
 
-	// strafe left to get to the side
-}
+	// turn left 90 degrees
+	turnLeft();
 
-void doCorner(int fd)
-{
-	// grid quandrant
+	// drive backwards to wall
+	driveBackground(190*FB_TO_STEPS);
 
-	// repeat similarly to doHome but with different positioning in mind
+	// strafe keft to doCorner() starting position
 }
 
 void toBase(int fd)

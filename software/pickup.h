@@ -5,6 +5,6 @@
 #include "pi2Arduino.h"
 #include "vision.h"
 
-int getClosest(void);
+int getClosest(int *, int *);
 
 #endif

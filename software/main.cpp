@@ -4,6 +4,7 @@
 #include "colorSensor.h"
 #include "pi2Arduino.h"
 #include "pickup.h"
+#include "game.h"
 #include <time.h>
 #include <signal.h>
 
@@ -24,14 +25,14 @@ void handle_SIGINT(int unused)
 	exit(0);
 }
 
-
+/*
 int main(int argc, char * argv[])
 {
 	signal(SIGINT, handle_SIGINT);
 	driveSetup();
 
 	int fd = arduinoSetup();
-
+	
 	float x,y;
 	int signature;
 
@@ -51,11 +52,9 @@ int main(int argc, char * argv[])
 	arduinoClose(fd);
 
 	return 0;
-
-
 }
+*/
 
-/*
 int main (void)
 {
 	signal(SIGINT, handle_SIGINT);
@@ -102,45 +101,45 @@ int main (void)
 	clock_gettime(CLOCK_REALTIME, &get_time);
 	match_time = get_time.tv_sec - start_time;
 	printf("<%3ld> READING COLOR...\n", match_time);
-	if (red > 200 && green < 50 && blue < 50)
+	if (red > 30000 && green < 30000 && blue < 30000)
 	{
 		base = RED;
 		printf("<%3ld> HOME BASE IS RED\n", match_time);
 	}
-	else if (red > 200 && green > 200 && blue < 50)
+	else if (red > 30000 && green > 30000 && blue < 30000)
 	{
 		base = YELLOW;
 		printf("<%3ld> HOME BASE IS YELLOW\n", match_time);
 	}
-	else if (red < 50 && green < 50 && blue > 200)
+	else if (red < 30000 && green < 30000 && blue > 30000)
 	{
 		base = BLUE;
 		printf("<%3ld> HOME BASE IS BLUE\n", match_time);
 	}
-	else if (red < 50 && green > 200 && blue < 50)
+	else if (red < 30000 && green > 30000 && blue < 30000)
 	{
 		base = GREEN;
 		printf("<%3ld> HOME BASE IS GREEN\n", match_time);
 	}
 	else
 	{
-		printf("<%3ld> UNABLE TO DETERMINE HOME BASE...GUESSING 0\n", match_time);
-		base = 0;
-		// NEED TO GUESS A HOME BASE HERE
-		// maybe make a note not to bother dropping off though
+		printf("<%3ld> UNABLE TO DETERMINE HOME BASE...\n", match_time);
+		base = -1;
+
+		// if base is -1, do not drop off
 	}
 
 	clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
-	printf("<%3ld> R = %d\n", red, match_time);
-	printf("<%3ld> G = %d\n", green, match_time);
-	printf("<%3ld> B = %d\n", blue, match_time);
+	printf("<%3ld> R = %d\n", match_time, red);
+	printf("<%3ld> G = %d\n", match_time, green);
+	printf("<%3ld> B = %d\n", match_time, blue);
 
 	clock_gettime(CLOCK_REALTIME, &get_time);
 	match_time = get_time.tv_sec - start_time;
 
 	printf("<%3ld> STARTING NAVIGATION\n", match_time);
-	for (i = 0; (i < 4) && (match_time < TIME_THRESH); i++)
-	{
+//	for (i = 0; (i < 4) && (match_time < TIME_THRESH); i++)
+//	{
 		currentColor = (i + base) % 4;
 		if (currentColor == base)
 		{
@@ -150,17 +149,17 @@ int main (void)
 			// move from home base function
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> MOVING FROM HOME...\n", match_time);
-			// fromHome();
+			fromHome(fd);
 
 			// do corner at starting orientation
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> DOING HOME CORNER...\n", match_time);
-			// doHome();
+			doCorner(fd);
 
 			// move to next corner
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> MOVING TO NEXT CORNER\n", match_time);
-			// moveCorner();
+			moveCorner(fd);
 		}
 		else
 		{
@@ -179,8 +178,8 @@ int main (void)
 		}
 		clock_gettime(CLOCK_REALTIME, &get_time);
 		match_time = get_time.tv_sec - start_time;
-	}
-
+//	}
+/*
 	// after collecting in all zones, start drop off process
 	if (match_time < TIME_THRESH)
 	{
@@ -221,9 +220,9 @@ int main (void)
 	printf("<%3ld> RAISING THE FLAG\n", match_time);
 	// dumpBase at home will raise the flag
 	// dumpBase(base+i);
-
+*/
 	printf("<%3ld> DONE.\n", match_time);
 	arduinoClose(fd);
 	return 0;
 }
-*/
+
