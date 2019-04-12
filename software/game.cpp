@@ -10,7 +10,7 @@ void fromHome(int fd)
 	// starting at home position
 
 	// strafe left until edge of zone 2
-	strafeLeft(2000);
+	strafeLeft((int)((RL_TO_STEPS)*80));
 	straighten(fd);
 
 	// after this doHome will start the process of gridding
@@ -29,7 +29,7 @@ void doCorner(int fd)
 	float x, y;
 	int signature = -1;
 
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 2; i++)
 	{
 		END_OF_COL = 0;
 
