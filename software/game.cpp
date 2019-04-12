@@ -176,7 +176,7 @@ void go(float x, float y, int fd)
 	float dX, dY;
 	
 	driveOn();
-	straighten();
+	straighten(fd);
 	currX = distance1(fd);
 	currY = distance3(fd);
 	
@@ -185,20 +185,20 @@ void go(float x, float y, int fd)
 	
 	if (dX < 0)
 	{
-		driveLeft((int)(-dX*LR_TO_STEP))
+		strafeLeft((int)(-dX*LR_TO_STEP));
 	}
 	else if (dX > 0)
 	{
-		driveLeft((int)(dX*LR_TO_STEP))
+		strafeRight((int)(dX*LR_TO_STEP));
 	}
 	
 	if (dY < 0)
 	{
-		driveLeft((int)(-dY*LR_TO_STEP))
+		driveForward((int)(-dY*LR_TO_STEP));
 	}
 	else if (dY > 0)
 	{
-		driveLeft((int)(dY*LR_TO_STEP))
+		driveBackward((int)(dY*LR_TO_STEP));
 	}
 	
 	

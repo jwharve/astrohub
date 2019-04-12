@@ -13,6 +13,6 @@ void doCorner(int);
 void toBase(int);
 void dumpBase(int, int);
 void goHome(int, int, int);
-void go(float x, float y, int fd)
+void go(float x, float y, int fd);
 
 #endif
