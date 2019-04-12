@@ -33,8 +33,8 @@ R = 75;
 R = 47;
 R = 11; % 70
 
-C = 190;
-R = 20;
+C = 1;
+R = 1;
 
 pH = (C-numCols/2)/numCols;
 pV = ((numRows - R)-numRows/2)/numRows;

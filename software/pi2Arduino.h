@@ -33,6 +33,7 @@ void collection(int, int);
 float distance1(int);
 float distance2(int);
 float distance3(int);
+void raiseFlag(int);
 
 int arduinoSetup(void);
 void arduinoClose(int);

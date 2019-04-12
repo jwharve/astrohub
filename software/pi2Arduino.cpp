@@ -15,6 +15,11 @@ void dump3(int fd)
 	arduinoWriteChar(fd,S3);
 }
 
+void raiseFlag(int)
+{
+	arduinoWriteChar(fd,RF);
+}
+
 void collection(int fd, int num)
 {
 	switch (num)

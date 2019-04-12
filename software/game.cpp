@@ -121,11 +121,42 @@ void moveCorner(int fd)
 void toBase(int fd)
 {
 	// whatever quandrant you are currently in, go to that base
+	float a = distance1(fd);
+	
+	driveOn();
+	strafeRight((int)(1.1*a*LR_TO_STEP));
+	strafeLeft(25);
+	
+	a = distance3(fd);
+	
+	if ( a > 5)
+	{
+		driveOn();
+		driveBackward((int)((a-5)*FB_TO_STEP));
+	}
+	strafeRight((int)(MIDDLE*LR_TO_STEP));
+
+	driveOff();
 }
 
 void dumpBase(int fd, int location)
 {
 	// open the doors for the corresponding color
+	switch (location)
+	{
+		case 0:
+			raiseFlag(fd);
+			break;
+		case 1:
+			dump1(fd);
+			break;
+		case 2:
+			dump2(fd);
+			break;
+		case 3:
+			dump3(fd);
+			break;
+	}
 }
 
 void goHome(int fd, int base, int current)
@@ -163,4 +194,37 @@ void go(float x, float y, int fd)
 	{
 		driveBackward((int)(dY*LR_TO_STEP));
 	}
+}
+
+void center(int fd)
+{
+	float currX, dx;
+	int j = 0;
+	
+	straighten(fd);
+	
+	currX = distance1(fd);
+	
+	driveOn();
+	
+	while ((fabsf(currX - MIDDLE) > 3) && j < 3)
+	{
+		j++;
+		dX = currX - MIDDLE;
+	
+		if (dX < 0)
+		{
+			strafeLeft((int)(-3*dX/4*LR_TO_STEP));
+		}
+		else if (dX > 0)
+		{
+			strafeRight((int)(3*dX/4*LR_TO_STEP));
+		}
+		
+		currX = distance1(fd);
+	}
+	
+	driveOff();
+	
+	straighten(fd);
 }
