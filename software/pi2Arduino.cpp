@@ -124,12 +124,12 @@ char arduinoReadChar(int fd)
 }
 
 
-void elUp(int)
+void elUp(int fd)
 {
 	arduinoWriteChar(fd,RAISE);
 }
 
-void elDown(int)
+void elDown(int fd)
 {
 	arduinoWriteChar(fd,LOWER);
 }

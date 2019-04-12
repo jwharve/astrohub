@@ -1,5 +1,6 @@
 #include "drive.h"
 #include "pi2Arduino.h"
+#include "colorSensor.h"
 
 void driveOn()
 {
@@ -209,6 +210,11 @@ void straighten(int fd)
 int proximity(void)
 {
 	int i = 0;
+	driveOn();
+	digitalWrite(FR_DIR, HIGH);
+	digitalWrite(FL_DIR, LOW);
+	digitalWrite(BR_DIR, LOW);
+	digitalWrite(BL_DIR, HIGH);
 
 	while (backboardProx() != NEAR)
 	{

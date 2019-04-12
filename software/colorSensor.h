@@ -8,7 +8,7 @@
 
 #include "ISL_29125.h"
 
-#define BBPROX_PIN 2
+#define BBPROX_PIN 3
 #define NEAR 0
 
 class Sensor

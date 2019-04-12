@@ -21,20 +21,21 @@ int fd;
 void handle_SIGINT(int unused)
 {
 	driveOff();
-	elUp(fd);
 	arduinoClose(fd);
 	exit(0);
 }
 
-/*
+
 int main(int argc, char * argv[])
 {
 	signal(SIGINT, handle_SIGINT);
 	driveSetup();
+	driveOn();
 
 	int fd = arduinoSetup();
 	
 	float x,y;
+	int xi, yi;
 	int signature;
 
 	pixy(&signature,&x,&y);
@@ -43,10 +44,10 @@ int main(int argc, char * argv[])
 	printf("x - %f\n",x);
 	printf("y - %f\n",y);
 
-//	getClosest();
+	getClosest(&xi,&yi);
 
 	driveOff();
-	collection(fd,2);
+//	collection(fd,2);
 
 	dump2(fd);
 
@@ -54,8 +55,8 @@ int main(int argc, char * argv[])
 
 	return 0;
 }
-*/
 
+/*
 int main (void)
 {
 	signal(SIGINT, handle_SIGINT);
@@ -225,8 +226,10 @@ int main (void)
 	// dumpBase at home will raise the flag
 	// dumpBase(base+i);
 */
+/*
 	printf("<%3ld> DONE.\n", match_time);
 	elUp(fd);
 	arduinoClose(fd);
 	return 0;
 }
+*/
