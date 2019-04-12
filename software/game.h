@@ -14,5 +14,6 @@ void toBase(int);
 void dumpBase(int, int);
 void goHome(int, int, int);
 void go(float x, float y, int fd);
+void center(int fd);
 
 #endif

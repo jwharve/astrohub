@@ -1,6 +1,6 @@
 #include "pickup.h"
 
-int getClosest(int *x_steps, int *y_steps)
+int getClosest(int *x_steps, int *y_steps, int ignoreNum)
 {
 	float x,y;
 	float x_des = -10;
@@ -12,7 +12,7 @@ int getClosest(int *x_steps, int *y_steps)
 	*x_steps = 0;
 	*y_steps = 0;
 
-	if (pixy(&signature,&x,&y) < 0)
+	if (pixyIgnore(&signature,&x,&y,ignoreNum) < 0)
 	{
 		printf("didn't see any objects\n");
 		return -1;
@@ -35,7 +35,7 @@ int getClosest(int *x_steps, int *y_steps)
 	}
 
 	// take another picture
-	if (pixy(&signature,&x,&y) < 0)
+	if (pixyIgnore(&signature,&x,&y,ignoreNum) < 0)
 	{
 		printf("didn't see any objects\n");
 		return -1;
@@ -68,8 +68,6 @@ int getClosest(int *x_steps, int *y_steps)
 		driveForward((int)(FB_TO_STEP*fabsf(y_delta)));
 		*y_steps += ((int)(FB_TO_STEP*fabsf(y_delta)));
 	}
-
-	delay(2000);
 
 	// drive until proximity sensor is tripped
 	*y_steps += (int)(FB_TO_STEP*proximity());

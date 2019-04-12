@@ -217,7 +217,7 @@ void loop()
           down();
           digitalWrite(ENABLE,HIGH);
           break;
-        case CR: 
+        case CR:
           // Collect Right
           downFull();
           for (i = 0; (i < 3) && (digitalRead(BREAK) == UNBROKEN); i ++)

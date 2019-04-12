@@ -8,11 +8,6 @@
 #include <time.h>
 #include <signal.h>
 
-#define RED 0
-#define YELLOW 1
-#define BLUE 2
-#define GREEN 3
-
 // time threshold in seconds
 #define TIME_THRESH 120
 
@@ -173,12 +168,12 @@ int main (void)
 			// do corner
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> DOING CORNER...\n", match_time);
-			// doCorner(base);
+			doCorner(fd);
 
 			// move to next corner
 			clock_gettime(CLOCK_REALTIME, &get_time); match_time = get_time.tv_sec - start_time;
 			printf("<%3ld> MOVING TO NEXT CORNER\n", match_time);
-			// moveCorner();
+			moveCorner(fd);
 		}
 		clock_gettime(CLOCK_REALTIME, &get_time);
 		match_time = get_time.tv_sec - start_time;

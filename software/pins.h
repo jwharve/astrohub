@@ -22,4 +22,9 @@
 #define BL_DIR 22
 #define ENABLE 12
 
+#define RED 0
+#define YELLOW 1
+#define BLUE 2
+#define GREEN 3
+
 #endif
