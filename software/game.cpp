@@ -56,7 +56,7 @@ void doCorner(int fd)
 		i = 1;
 		while (pixyReturn > 0)
 		{		
-			if ((dead_zone(x,y)))
+			if (dead_zone(x-x_current-17, y+y_current+22))
 			{
 				pixyReturn = pixyIgnore(&signature, &x, &y, i);
 				i++;
@@ -67,7 +67,7 @@ void doCorner(int fd)
 			}
 		}
 
-		if (!(dead_zone(x,y)))
+		if (!(dead_zone(x-x_current-17, y+y_current+22)))
 		{
 			signature = getClosest(&x_steps, &y_steps, i-1);
 			collection(fd, signature);
@@ -227,4 +227,28 @@ void center(int fd)
 	driveOff();
 	
 	straighten(fd);
+}
+
+int dead_zone(int x, int y)
+{
+	if (x < (-130 + 25) && y < (30))
+	{
+		return 1;
+	} 
+	else if (y < 135 && y > (130 - 25) && x > -30)
+	{
+		return 1;
+	}
+	else if (x < (-130 + 17 + 25) && y > (130 - 17 - 25) && y < (130 + 17)
+	{
+		return 1;
+	}
+	else if (x < (-120 + 25) && y > (260 - 30))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
