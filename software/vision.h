@@ -22,6 +22,6 @@
 void loc(int, int, float *, float *);
 int pixy(int *, float *,float *);
 int pixyIgnore(int *signature, float *x, float *y, int ignoreNum);
-int sig2Color(int sig);
+char sig2Color(int sig);
 
 #endif

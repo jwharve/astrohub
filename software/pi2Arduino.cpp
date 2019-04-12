@@ -15,7 +15,7 @@ void dump3(int fd)
 	arduinoWriteChar(fd,S3);
 }
 
-void raiseFlag(int)
+void raiseFlag(int fd)
 {
 	arduinoWriteChar(fd,RF);
 }

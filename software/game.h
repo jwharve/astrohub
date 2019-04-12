@@ -5,6 +5,8 @@
 #include "drive.h"
 #include "vision.h"
 #include "pickup.h"
+#include "pi2Arduino.h"
+
 
 void fromHome(int);
 void doHome(int);
@@ -15,5 +17,6 @@ void dumpBase(int, int);
 void goHome(int, int, int);
 void go(float x, float y, int fd);
 void center(int fd);
+int dead_zone(int, int);
 
 #endif

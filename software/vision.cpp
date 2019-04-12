@@ -180,7 +180,7 @@ int pixyIgnore(int *signature, float *x, float *y, int ignoreNum)
 
 char sig2Color(int sig)
 {
-	case (sig)
+	switch (sig)
 	{
 		case 1:
 			return RED;

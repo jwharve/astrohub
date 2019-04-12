@@ -72,8 +72,8 @@ void doCorner(int fd)
 			signature = getClosest(&x_steps, &y_steps, i-1);
 			collection(fd, signature);
 
-			// wiat until collection is good
-			arduinoGetChar();
+			// wait until collection is good
+			arduinoReadChar(fd);
 
 			// center robot
 			center(fd);	
@@ -198,7 +198,7 @@ void go(float x, float y, int fd)
 
 void center(int fd)
 {
-	float currX, dx;
+	float currX, dX;
 	int j = 0;
 	
 	straighten(fd);
@@ -239,7 +239,7 @@ int dead_zone(int x, int y)
 	{
 		return 1;
 	}
-	else if (x < (-130 + 17 + 25) && y > (130 - 17 - 25) && y < (130 + 17)
+	else if (x < (-130 + 17 + 25) && y > (130 - 17 - 25) && y < (130 + 17))
 	{
 		return 1;
 	}

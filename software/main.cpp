@@ -75,11 +75,14 @@ int main (void)
 	driveSetup();
 	proxInit();
 	fd = arduinoSetup();
+	pullUpDnControl (START_PIN, PUD_DOWN);
+	pinMode(START_PIN,INPUT);
 	elDown(fd);
-	printf("<%3lf> SETUP FINISHED\n\n", -1);
+	printf("<%3ld> SETUP FINISHED\n\n", -1);
 
 	// busy wait for start button
 	printf("<%3ld> BUSY WAIT...\n", -1);
+	while(digitalRead(START_PIN) == 0);
 
 	// start timer
 	clock_gettime(CLOCK_REALTIME, &get_time);
