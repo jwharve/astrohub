@@ -169,3 +169,37 @@ void goHome(int fd, int base, int current)
 {
 	// whereever the robot currently is,
 }
+
+void go(float x, float y, int fd)
+{
+	float currX, currY;
+	float dX, dY;
+	
+	driveOn();
+	straighten();
+	currX = distance1(fd);
+	currY = distance3(fd);
+	
+	dX = currX - x;
+	dY = currY - y;
+	
+	if (dX < 0)
+	{
+		driveLeft((int)(-dX*LR_TO_STEP))
+	}
+	else if (dX > 0)
+	{
+		driveLeft((int)(dX*LR_TO_STEP))
+	}
+	
+	if (dY < 0)
+	{
+		driveLeft((int)(-dY*LR_TO_STEP))
+	}
+	else if (dY > 0)
+	{
+		driveLeft((int)(dY*LR_TO_STEP))
+	}
+	
+	
+}

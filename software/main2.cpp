@@ -30,29 +30,27 @@ int main(int argc, char * argv[])
 {
 	signal(SIGINT, handle_SIGINT);
 	driveSetup();
-	driveOn();
-
 	int fd = arduinoSetup();
 	
 	float x,y;
 	int xi, yi;
 	int signature;
+	
+	//pixy(&signature,&x,&y);
 
-	pixy(&signature,&x,&y);
+	//printf("#%d\n", signature);
+	//printf("x - %f\n",x);
+	//printf("y - %f\n",y);
 
-	printf("#%d\n", signature);
-	printf("x - %f\n",x);
-	printf("y - %f\n",y);
+//	getClosest(&xi,&yi);
 
-	getClosest(&xi,&yi);
-
-	driveOff();
+	go(30,30,fd);
+	
 //	collection(fd,2);
 
-	dump2(fd);
-
 	arduinoClose(fd);
-
+	
+	driveOff();
 	return 0;
 }
 
