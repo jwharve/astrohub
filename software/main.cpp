@@ -75,7 +75,9 @@ int main (void)
 	driveSetup();
 	proxInit();
 	fd = arduinoSetup();
+
 	pullUpDnControl (START_PIN, PUD_DOWN);
+
 	pinMode(START_PIN,INPUT);
 	elDown(fd);
 	printf("<%3ld> SETUP FINISHED\n\n", -1);

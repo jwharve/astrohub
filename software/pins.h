@@ -24,6 +24,7 @@
 
 #define START_PIN 24
 
+// COLORS
 #define RED 0
 #define YELLOW 1
 #define BLUE 2
