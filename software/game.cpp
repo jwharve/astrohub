@@ -18,6 +18,8 @@ void fromHome(int fd)
 
 void doCorner(int fd)
 {
+	int END_OF_COL = 0;
+
 	int i = 0;
 	float homing_x = 0;
 	float homing_y = 0;
@@ -29,68 +31,89 @@ void doCorner(int fd)
 
 	for (i = 0; i < 3; i++)
 	{
-		// get starting distance
-		homing_x = distance1(fd);
-		homing_y = distance3(fd);
+		END_OF_COL = 0;
 
-		// check if pixy detects objects
-		// if no object was detected, move on
-		if (pixy(&signature, &x, &y) < 0)
+		while (!END_OF_COL)
 		{
-			driveOn();
-			// drive to next position
-			driveForward(2000);
-			driveOff();
-		}
-		else
-		{
-			// locate closest object
-			getClosest(&x_steps, &y_steps);
-			collection(fd,signature);
-			delay(3000);
 
-			// return to reference position
-			driveOn();
-			if (x_steps > 0)
+			// get starting distance
+			homing_x = distance1(fd);
+			homing_y = distance3(fd);
+	
+			// check if pixy detects objects
+			// if no object was detected, move on
+			if (pixy(&signature, &x, &y) < 0)
 			{
-				strafeLeft(homing_x);
-			}
-			else if (x_steps < 0)
-			{
-				strafeRight(-1*homing_x);
-			}
+				driveOn();
+				// drive to next position
+				driveForward(2000);
+				driveOff();
 			
-			straighten();
+				// update new starting distance
+				homing_x = distance(fd);
+				homing_y = distance(fd);
+		
+				// don't find an object again
+				if (pixy(&signature, &x, &y) < 0)
+				{
+					if (i != 2)
+					{
+						// go to next column
+						driveOn();
+						driveBackward(2000);
+						strafeRight(3000);
+					}
+					END_OF_COL = 1;
+				}
+			}
+			else
+			{
+				// locate closest object
+				getClosest(&x_steps, &y_steps);
+				collection(fd,signature);
+				delay(3000);
+	
+				// return to reference position
+				driveOn();
+				if (x_steps > 0)
+				{
+					strafeLeft(homing_x);
+				}
+				else if (x_steps < 0)
+				{
+					strafeRight(-1*homing_x);
+				}
+				
+				straighten();
 
-			if (y_steps > 0)
-			{
-				driveBackward(homing_y);
+				if (y_steps > 0)
+				{
+					driveBackward(homing_y);
+				}
+				else if (y_steps < 0)
+				{
+					driveForward(-1*homing_y);
+				}
+				driveOff();
+	
+				// check error and drive to fix
+				x_steps = (LR_TO_STEPS)*(distance1(fd) - homing_x);
+				y_steps = (FR_TO_STEPS)*(distance3(fd) - homing_y);
 			}
-			else if (y_steps < 0)
-			{
-				driveForward(-1*homing_y);
-			}
-			driveOff();
 		}
 	}
-
-	// stop when done
-}
-
-void moveHome(int fd)
-{
-	// same as move corner but no turn
 }
 
 void moveCorner(int fd)
 {
-	// turn left 90 degrees
-
-	// strafe to center robot in quandrant
+	// center robot in quandrant
 
 	// drive forward until on line conneting next quadrant
 
-	// strafe left to get to the side
+	// turn left 90 degrees
+
+	// drive backwards to wall
+
 }
 
 void toBase(int fd)

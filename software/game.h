@@ -8,7 +8,6 @@
 
 void fromHome(int);
 void doHome(int);
-void moveHome(int);
 void moveCorner(int);
 void doCorner(int);
 void toBase(int);
