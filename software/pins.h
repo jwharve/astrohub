@@ -22,6 +22,10 @@
 #define BL_DIR 22
 #define ENABLE 12
 
+#define START_PIN 4
+
+
+// COLORS
 #define RED 0
 #define YELLOW 1
 #define BLUE 2
