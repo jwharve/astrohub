@@ -9,10 +9,10 @@
 #define NOT_COLLECT 180
 
 // servo pins
-#define SERVO_1 9
-#define SERVO_2 10
-#define SERVO_3 11
-#define COLLECTION 3
+#define SERVO_1 10
+#define SERVO_2 9
+#define SERVO_3 3
+#define COLLECTION 11
 
 // distance sensor pins
 #define TRIG_1 2
@@ -57,6 +57,8 @@
 #define CB 'i'
 #define CL 'j'
 #define CR 'k'
+#define RAISE 'l'
+#define LOWER 'm'
 
 char incomingChar = 0;
 double distance = 0;
@@ -232,6 +234,13 @@ void loop()
           dropRight();
           down();
           digitalWrite(ENABLE,HIGH);
+          break;
+       case RAISE:
+          downFull();
+          up();
+          break;
+       case LOWER:
+          down();
           break;
     }
     distance = 0;
