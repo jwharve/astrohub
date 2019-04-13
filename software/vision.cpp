@@ -86,7 +86,7 @@ int pixy(int *signature, float *x, float *y)
 //	printf("Y - %f\n", y);
 	
 
-	if (*y > 60)
+	if (*y > 70)
 	{
 		*x = 0;
 		*y = 0;
@@ -186,6 +186,24 @@ char sig2Color(int sig)
 {
 	switch (sig)
 	{
+		case 1:
+			return RED;
+			break;
+		case 2:
+			return YELLOW;
+			break;
+		case 3:
+			return GREEN;
+			break;
+		case 4:
+			return BLUE;
+			break;
+		case 5:
+			return BLUE;
+			break;
+		case 6:
+			return RED;
+			break;
 		default:
 			return BLUE;
 			break;

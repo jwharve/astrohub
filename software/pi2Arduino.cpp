@@ -76,7 +76,7 @@ float distance2(int fd)
 }
 
 float distance3(int fd)
-{	
+{
 	static char * message1, * message2, * message3;
 
 
@@ -141,9 +141,9 @@ char *arduinoReadString(int fd)
 
 char arduinoReadChar(int fd)
 {
-	while(serialDataAvail(fd) == 0);
-
-	return serialGetchar(fd);
+//	while(serialDataAvail(fd) == 0);
+	char a = serialGetchar(fd);
+	return a;
 }
 
 

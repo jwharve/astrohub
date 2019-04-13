@@ -19,10 +19,13 @@ void fromHome(int fd)
 
 	// drive to wall
 	float a = distance3(fd);
-	if ( a > 5)
+	if ( a > 0)
 	{
-		driveBackward((int)((a-5)*FB_TO_STEP));
+		driveBackward((int)(a*FB_TO_STEP));
 	}
+
+
+	driveForward(40);
 
 	driveOff();
 }
@@ -44,8 +47,9 @@ void doCorner(int fd)
 	float dist = 0;
 	dist = distance3(fd);
 
-	while (dist < 115)
+	while (dist < 100)
 	{
+		serialFlush(fd);
 		// get current location
 		x_current = distance1(fd);
 		y_current = distance3(fd);
@@ -72,18 +76,14 @@ void doCorner(int fd)
 			printf("Before get\n");
 			signature = getClosest(&x_steps, &y_steps, i-1);
 			printf("After get\n");
-		
+
 			if (signature != -1)
 			{
 				collection(fd, sig2Color(signature));
-
-
-				// wait until collection is good
-				arduinoReadChar(fd);
 			}
 
 			// center robot
-			center(fd);	
+			center(fd);
 
 			driveOn();
 			driveBackward((int)(FB_TO_STEP*20));
@@ -103,6 +103,7 @@ void doCorner(int fd)
 void moveCorner(int fd)
 {
 	float a = distance3(fd);
+	straighten(fd);
 
 	if (a < 190)
 	{
@@ -121,10 +122,11 @@ void moveCorner(int fd)
 	driveOn();
 	a = distance3(fd);
 	// drive backward to wall
-	if (a > 5)
+	if (a > 0)
 	{
-		driveBackward((int)((a-5)*FB_TO_STEP));
+		driveBackward((int)(a*FB_TO_STEP));
 	}
+	driveForward(40);
 	driveOff();
 }
 
@@ -132,13 +134,23 @@ void toBase(int fd)
 {
 	// whatever quandrant you are currently in, go to that base
 	float a = distance1(fd);
-	
+
 	driveOn();
+
+	turnRight(NINETY);
+	driveForward((int)(55*FB_TO_STEP));
+	driveBackward(20);
+	raiseFlag(fd);
+	return;
+
+
+
+
 	strafeRight((int)(1.1*a*LR_TO_STEP));
 	strafeLeft(25);
-	
+
 	a = distance3(fd);
-	
+
 	if ( a > 5)
 	{
 		driveOn();
@@ -243,6 +255,35 @@ int dead_zone(int x, int y)
 {
 	printf("X - %d\n",x);
 	printf("Y - %d\n",y);
+
+	if (x < -120)
+	{
+		printf("too far left\n");
+		return 1;
+	}
+	else if (y > 110 && y < 140)
+	{
+		printf("miss stripe\n");
+		return 1;
+	}
+	else if (y > 150)
+	{
+		printf("too far\n");
+		return 1;
+	}
+	else if (x > -25)
+	{
+		printf("too far right\n");
+		return 1;
+	}
+	else
+	{
+		printf("good\n");
+		return 0;
+	}
+
+
+
 
 	if (x < -100)
 	{

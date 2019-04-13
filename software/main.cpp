@@ -17,6 +17,7 @@ void handle_SIGINT(int unused)
 {
 	driveOff();
 	elUp(fd);
+	raiseFlag(fd);
 	arduinoClose(fd);
 	exit(0);
 }
@@ -97,7 +98,7 @@ int main (void)
 	else
 	{
 		printf("<%3ld> UNABLE TO DETERMINE HOME BASE...\n", match_time);
-		base = -1;
+		base = BLUE;
 
 		// if base is -1, do not drop off
 	}
@@ -112,8 +113,8 @@ int main (void)
 
 	printf("<%3ld> STARTING NAVIGATION\n", match_time);
 	i = 0;
-//	for (i = 0; (i < 4) && (match_time < TIME_THRESH); i++)
-//	{
+	for (i = 0; (i < 4) && (match_time < TIME_THRESH); i++)
+	{
 		currentColor = (i + base) % 4;
 		if (currentColor == base)
 		{
@@ -152,7 +153,33 @@ int main (void)
 		}
 		clock_gettime(CLOCK_REALTIME, &get_time);
 		match_time = get_time.tv_sec - start_time;
+	}
+
+//	if (match_time >= TIME_THRESH)
+//	{
+		for (j = 0; j < 4 && match_time < 150; i++)
+		{
+			j++;
+			currentColor = (i + base) % 4;
+			if (currentColor != base)
+			{
+				moveCorner(fd);
+			}
+			else
+			{
+				toBase(fd);
+				break;
+			}
+			clock_gettime(CLOCK_REALTIME, &get_time);
+			match_time = get_time.tv_sec - start_time;
+		}
+
+		if (match_time >= 150)
+		{
+			driveForward(2000);
+		}
 //	}
+
 /*
 	// after collecting in all zones, start drop off process
 	if (match_time < TIME_THRESH)
@@ -197,6 +224,7 @@ int main (void)
 */
 	printf("<%3ld> DONE.\n", match_time);
 	elUp(fd);
+	raiseFlag(fd);
 	arduinoClose(fd);
 	return 0;
 }

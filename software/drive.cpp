@@ -175,6 +175,8 @@ void straighten(int fd)
 
 	float d3 = distance3(fd);
 
+	char dir = 0;
+
 	if (d3 > 95 && d3 < 125)
 	{
 		return;
@@ -196,18 +198,21 @@ void straighten(int fd)
 		d1 = d1/3;
 		d2 = d2/3;
 
-		if ((d1 - d2) < -A_THRESH)
+		if ((d1 - d2) < -A_THRESH && dir <= 0)
 		{
 			curr = 0;
 			turnLeft(5);
+			dir = -1;
 		}
-		else if ((d1-d2) > A_THRESH)
+		else if ((d1-d2) > A_THRESH && dir >= 0)
 		{
 			curr = 0;
 			turnRight(5);
+			dir = 1;
 		}
 		else
 		{
+			return;
 			curr = 1;
 			if (prev == 1)
 				return;
