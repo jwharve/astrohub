@@ -35,7 +35,9 @@ int main(int argc, char * argv[])
 	float x,y;
 	int xi, yi;
 	int signature;
-	
+while(1)
+	printf("%f %f %f\n", distance1(fd), distance2(fd), distance3(fd));
+
 	//pixy(&signature,&x,&y);
 
 	//printf("#%d\n", signature);
@@ -44,10 +46,10 @@ int main(int argc, char * argv[])
 
 //	getClosest(&xi,&yi);
 
-	go(30,30,fd);
+//	go(30,30,fd);
 	
 //	collection(fd,2);
-
+//elUp(fd);
 	arduinoClose(fd);
 	
 	driveOff();

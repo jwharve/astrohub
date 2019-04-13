@@ -87,10 +87,12 @@ int pixy(int *signature, float *x, float *y)
 	
 
 	if (*y > 60)
+	{
 		*x = 0;
 		*y = 0;
 		*signature = -1;
 		return -2;
+	}
 
 	return 0;
 }
@@ -169,10 +171,12 @@ int pixyIgnore(int *signature, float *x, float *y, int ignoreNum)
 	
 
 	if (*y > 60)
+	{
 		*x = 0;
 		*y = 0;
 		*signature = -1;
 		return -2;
+	}
 
 	return 0;
 }
@@ -182,8 +186,8 @@ char sig2Color(int sig)
 {
 	switch (sig)
 	{
-		case 1:
-			return RED;
+		default:
+			return BLUE;
 			break;
 	}
 }

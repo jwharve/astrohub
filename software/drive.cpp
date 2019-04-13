@@ -216,7 +216,7 @@ int proximity(void)
 	digitalWrite(BR_DIR, LOW);
 	digitalWrite(BL_DIR, HIGH);
 
-	while (backboardProx() != NEAR)
+	while (backboardProx() != NEAR && (i < (int)(FB_TO_STEP * 20)))
 	{
 		digitalWrite(STEP, HIGH);
 		delayMicroseconds(NR_SPEED);
@@ -226,5 +226,12 @@ int proximity(void)
 		i++;
 	}
 
-	return i;
+	if (i == (int)(FB_TO_STEP * 20))
+	{
+		return -1;
+	}
+	else
+	{
+		return i;
+	}
 }

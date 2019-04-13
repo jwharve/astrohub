@@ -36,7 +36,7 @@ void collection(int fd, int num)
 			arduinoWriteChar(fd,CR);
 			arduinoReadChar(fd);
 			break;
-		case 3:
+		default:
 			arduinoWriteChar(fd,CF);
 			arduinoReadChar(fd);
 			break;

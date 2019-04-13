@@ -8,6 +8,7 @@ int getClosest(int *x_steps, int *y_steps, int ignoreNum)
 	float x_delta;
 	float y_delta;
 	int signature;
+	int doNotCollect = 0;
 
 	*x_steps = 0;
 	*y_steps = 0;
@@ -70,7 +71,15 @@ int getClosest(int *x_steps, int *y_steps, int ignoreNum)
 	}
 
 	// drive until proximity sensor is tripped
-	*y_steps += (int)(FB_TO_STEP*proximity());
+	doNotCollect = (int)(FB_TO_STEP*proximity());
+	if (doNotCollect != -1)
+	{
+		*y_steps += doNotCollect;
+	}
+	else
+	{
+		return doNotCollect;
+	}
 
 	// drive backwards slightly
 	driveBackward((int)(LR_TO_STEP*2));

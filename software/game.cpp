@@ -44,7 +44,7 @@ void doCorner(int fd)
 	float dist = 0;
 	dist = distance3(fd);
 
-	while (dist > 190)
+	while (dist < 190)
 	{
 		// get current location
 		x_current = distance1(fd);
@@ -54,7 +54,7 @@ void doCorner(int fd)
 		pixyReturn = pixy(&signature, &x, &y);
 
 		i = 1;
-		while (pixyReturn > 0)
+		while (pixyReturn >= 0)
 		{		
 			if (dead_zone(x-x_current-17, y+y_current+22))
 			{
@@ -67,13 +67,20 @@ void doCorner(int fd)
 			}
 		}
 
-		if (!(dead_zone(x-x_current-17, y+y_current+22)))
+		if (pixyReturn >= 0)
 		{
+			printf("Before get\n");
 			signature = getClosest(&x_steps, &y_steps, i-1);
-			collection(fd, signature);
+			printf("After get\n");
+		
+			if (signature != -1)
+			{
+				collection(fd, sig2Color(signature));
 
-			// wait until collection is good
-			arduinoReadChar(fd);
+
+				// wait until collection is good
+				arduinoReadChar(fd);
+			}
 
 			// center robot
 			center(fd);	
@@ -84,6 +91,7 @@ void doCorner(int fd)
 		}
 		else
 		{
+			printf("Else\n");
 			driveOn();
 			driveForward((int)(FB_TO_STEP*40));
 			driveOff();
@@ -233,18 +241,42 @@ int dead_zone(int x, int y)
 {
 	if (x < (-130 + 25) && y < (30))
 	{
+		printf("dead zone 1\n");
 		return 1;
 	} 
 	else if (y < 135 && y > (130 - 25) && x > -30)
 	{
+		printf("dead zone 2\n");
 		return 1;
 	}
 	else if (x < (-130 + 17 + 25) && y > (130 - 17 - 25) && y < (130 + 17))
 	{
+		printf("dead zone 3\n");
 		return 1;
 	}
 	else if (x < (-120 + 25) && y > (260 - 30))
 	{
+		printf("dead zone 4\n");
+		return 1;
+	}
+	else if (y > 120 - 25 && y < 140 - 25)
+	{
+		printf("dead zone 5\n");
+		return 1;
+	}
+	else if (x < -120 + 25)
+	{
+		printf("dead zone 6\n");
+		return 1;
+	}
+	else if (x > 30)
+	{
+		printf("dead zone 7\n");
+		return 1;
+	}
+	else if (y > 160)
+	{
+		printf("dead zone 8\n");
 		return 1;
 	}
 	else
