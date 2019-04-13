@@ -44,7 +44,7 @@ void doCorner(int fd)
 	float dist = 0;
 	dist = distance3(fd);
 
-	while (dist < 190)
+	while (dist < 115)
 	{
 		// get current location
 		x_current = distance1(fd);
@@ -55,7 +55,7 @@ void doCorner(int fd)
 
 		i = 1;
 		while (pixyReturn >= 0)
-		{		
+		{
 			if (dead_zone(x-x_current-17, y+y_current+22))
 			{
 				pixyReturn = pixyIgnore(&signature, &x, &y, i);
@@ -86,7 +86,7 @@ void doCorner(int fd)
 			center(fd);	
 
 			driveOn();
-			driveBackward((int)(FB_TO_STEP*10));
+			driveBackward((int)(FB_TO_STEP*20));
 			driveOff();
 		}
 		else
@@ -118,12 +118,14 @@ void moveCorner(int fd)
 	// center robot
 	center(fd);
 
+	driveOn();
 	a = distance3(fd);
 	// drive backward to wall
 	if (a > 5)
 	{
 		driveBackward((int)((a-5)*FB_TO_STEP));
 	}
+	driveOff();
 }
 
 void toBase(int fd)
@@ -239,48 +241,37 @@ void center(int fd)
 
 int dead_zone(int x, int y)
 {
-	if (x < (-130 + 25) && y < (30))
+	printf("X - %d\n",x);
+	printf("Y - %d\n",y);
+
+	if (x < -100)
 	{
-		printf("dead zone 1\n");
-		return 1;
-	} 
-	else if (y < 135 && y > (130 - 25) && x > -30)
-	{
-		printf("dead zone 2\n");
+		printf("too far left\n");
 		return 1;
 	}
-	else if (x < (-130 + 17 + 25) && y > (130 - 17 - 25) && y < (130 + 17))
+	else if (x < -90 && y > 80 && y < 125)
 	{
-		printf("dead zone 3\n");
+		printf("avoid inside middle\n");
 		return 1;
 	}
-	else if (x < (-120 + 25) && y > (260 - 30))
+	else if (x > -15)
 	{
-		printf("dead zone 4\n");
+		printf("too far right\n");
 		return 1;
 	}
-	else if (y > 120 - 25 && y < 140 - 25)
+	else if (y > 105 && y < 125)
 	{
-		printf("dead zone 5\n");
+		printf("avoid middle\n");
 		return 1;
 	}
-	else if (x < -120 + 25)
+	else if (y > 190)
 	{
-		printf("dead zone 6\n");
-		return 1;
-	}
-	else if (x > 30)
-	{
-		printf("dead zone 7\n");
-		return 1;
-	}
-	else if (y > 160)
-	{
-		printf("dead zone 8\n");
+		printf("too far\n");
 		return 1;
 	}
 	else
 	{
+		printf("good\n");
 		return 0;
 	}
 }

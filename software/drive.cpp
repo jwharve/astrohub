@@ -173,6 +173,14 @@ void straighten(int fd)
 	bool prev;
 	bool curr = 0;
 
+	float d3 = distance3(fd);
+
+	if (d3 > 95 && d3 < 125)
+	{
+		return;
+	}
+
+
 	for (i = 0; i < NUM_STRAIGHT; i++)
 	{
 		prev = curr;

@@ -45,32 +45,50 @@ void collection(int fd, int num)
 
 float distance1(int fd)
 {
-	static char *message;
+	static char * message1, * message2, * message3;
 
 	arduinoWriteChar(fd, D1);
-	message = arduinoReadString(fd);
+	message1 = arduinoReadString(fd);
 
-	return atof(message);
+	arduinoWriteChar(fd, D1);
+	message2 = arduinoReadString(fd);
+
+	arduinoWriteChar(fd, D1);
+	message3 = arduinoReadString(fd);
+
+	return (atof(message1) + atof(message2) + atof(message3))/3;
 }
 
 float distance2(int fd)
 {
-	static char *message;
+	static char * message1, * message2, * message3;
 
 	arduinoWriteChar(fd, D2);
-	message = arduinoReadString(fd);
+	message1 = arduinoReadString(fd);
 
-	return atof(message);
+	arduinoWriteChar(fd, D2);
+	message2 = arduinoReadString(fd);
+
+	arduinoWriteChar(fd, D2);
+	message3 = arduinoReadString(fd);
+
+	return (atof(message1) + atof(message2) + atof(message3))/3;
 }
 
 float distance3(int fd)
-{
-	static char *message;
+{	
+	static char * message1, * message2, * message3;
+
 
 	arduinoWriteChar(fd, D3);
-	message = arduinoReadString(fd);
+	message1 = arduinoReadString(fd);
 
-	return atof(message);
+	arduinoWriteChar(fd, D3);
+	message2 = arduinoReadString(fd);
+
+	arduinoWriteChar(fd, D3);
+	message3 = arduinoReadString(fd);
+	return (atof(message1) + atof(message2) + atof(message3))/3;
 }
 
 int arduinoSetup(void)
